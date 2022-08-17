@@ -6,27 +6,42 @@ export const Container = styled.main`
   margin: 0 auto;
 `
 
-const FormWrapper = styled.div`
+export const FormWrapper = styled.div`
   display: flex;
   justify-content: center;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  width: 40%;
 `
 
-const Form = styled.form`
+export const Form = styled.form`
   background: #FFFFFF;
   border-radius: 15px;
   padding: 30px;
   max-width: 500px;
   width: 100%;
+  min-height: 315px;
 `
 
-const InputField = styled.div`
+export const InputField = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 15px;
 `
 
-const TextLabel = styled.div`
+export const Input = styled.input`
+  width: 100%;
+  display: flex;
+  border: 1px solid #E5E5E5;
+  border-radius: 5px;
+  box-sizing: border-box;
+  outline: none;
+  padding: 5px 10px;
+`
+
+export const TextLabel = styled.div`
   font-style: normal;
   font-weight: 300;
   font-size: 18px;
@@ -35,7 +50,7 @@ const TextLabel = styled.div`
   margin-bottom: 5px;
 `
 
-const FormBtn = styled.button`
+export const FormBtn = styled.button`
   display: flex;
   margin: 30px auto 0 auto;
   padding: 9px 38px;
@@ -50,8 +65,20 @@ const FormBtn = styled.button`
   text-align: center;
   color: #FFFFFF;
   cursor: pointer;
+
   :hover {
     box-shadow: 0px 0px 25px rgba(148, 174, 213, 0.5);
     transition: .3s all ease;
   }
+`
+
+export const SwitchFormBtn = styled.div`
+  margin-right: auto;
+  padding-left: 30px;
+`
+
+export const SwitchButton = styled.button`
+  background: transparent;
+  border: none;
+  cursor: pointer;
 `

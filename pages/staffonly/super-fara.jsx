@@ -1,28 +1,76 @@
 import { useState } from 'react'
-import * as Styled from './styles'
+import Head from 'next/head'
+import * as Styled from './styles.js'
+import { Header } from '../../components/Header/styles.js'
+import { useMutation } from '@apollo/client'
+import { CREATE_USER } from '../../graphql/mutations/user'
 
-const superFara = () => {
+const SuperFara = () => {
+  const [newUser] = useMutation(CREATE_USER)
+  const [login, setLogin] = useState(true)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+
+  const sendForm = async () => {
+    if (login) {
+      console.log('====================================')
+      console.log('Login >>', email, password)
+      console.log('====================================')
+    } else {
+      try {
+        await newUser({
+          variables: {
+            input: {
+              email, password, confirmPassword
+            }
+          }
+        })
+      } catch (error) {
+        console.log('Add user error on client >>', error)
+      }
+    }
+  }
+
   return (
     <Styled.Container>
-      <FormWrapper>
-          <Form onSubmit={e => e.preventDefault()}>
-            <InputField>
-              <TextLabel>E-mail:</TextLabel>
-              <Input onChange={e => setEmail(e.target.value)} />
-            </InputField>
+      <Head>
+        <title>Login | Registration</title>
+      </Head>
 
-            <InputField>
-              <TextLabel>Password:</TextLabel>
-              <Input onChange={e => setPassword(e.target.value)} />
-            </InputField>
+      <Header />
 
-            <FormBtn onClick={login}>Go Go Go</FormBtn>
-          </Form>
-        </FormWrapper>
+      <Styled.FormWrapper>
+          { login ? <h1>Login</h1> : <h1>Registration</h1> }
+          <Styled.Form onSubmit={e => e.preventDefault()}>
+            <Styled.InputField>
+              <Styled.TextLabel>E-mail:</Styled.TextLabel>
+              <Styled.Input onChange={e => setEmail(e.target.value)} />
+            </Styled.InputField>
+
+            <Styled.InputField>
+              <Styled.TextLabel>Password:</Styled.TextLabel>
+              <Styled.Input onChange={e => setPassword(e.target.value)} />
+            </Styled.InputField>
+
+            { !login &&
+              <Styled.InputField>
+                <Styled.TextLabel>Confirm password:</Styled.TextLabel>
+                <Styled.Input onChange={e => setConfirmPassword(e.target.value)} />
+              </Styled.InputField>
+            }
+
+            <Styled.FormBtn onClick={sendForm}>Go Go Go</Styled.FormBtn>
+          </Styled.Form>
+
+          <Styled.SwitchFormBtn>
+            <Styled.SwitchButton onClick={() => setLogin(false)}>Registration</Styled.SwitchButton>
+            {' / '}
+            <Styled.SwitchButton onClick={() => setLogin(true)}>Login</Styled.SwitchButton>
+          </Styled.SwitchFormBtn>
+        </Styled.FormWrapper>
     </Styled.Container>
-  );
+  )
 };
 
-export default superFara
+export default SuperFara
