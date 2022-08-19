@@ -16,6 +16,17 @@ export const FormWrapper = styled.div`
   width: 40%;
 `
 
+export const FormHeader = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`
+
+export const Approved = styled.p`
+  color: red;
+  margin: 0;
+`
+
 export const Form = styled.form`
   background: #FFFFFF;
   border-radius: 15px;

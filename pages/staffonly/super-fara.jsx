@@ -3,29 +3,40 @@ import Head from 'next/head'
 import * as Styled from './styles.js'
 import { Header } from '../../components/Header/styles.js'
 import { useMutation } from '@apollo/client'
-import { CREATE_USER } from '../../graphql/mutations/user'
+import { CREATE_USER, LOGIN } from '../../graphql/mutations/user'
 
 const SuperFara = () => {
   const [newUser] = useMutation(CREATE_USER)
-  const [login, setLogin] = useState(true)
+  const [login] = useMutation(LOGIN)
+  const [isLogin, setIsLogin] = useState(true)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
 
   const sendForm = async () => {
-    if (login) {
-      console.log('====================================')
-      console.log('Login >>', email, password)
-      console.log('====================================')
+    if (isLogin) {
+      try {
+        await login({
+          variables: { email, password }
+        })
+        .then(data => {
+          if (data.data.login.approved) {
+            console.log('====================================');
+            console.log('login data >>', data.data.login);
+            console.log('====================================');
+          }
+        })
+      } catch (error) {
+        console.log('Login error on client >>', error)
+      }
     } else {
       try {
         await newUser({
           variables: {
-            input: {
-              email, password, confirmPassword
-            }
+            input: { email, password, confirmPassword }
           }
         })
+        setApproved(false)
       } catch (error) {
         console.log('Add user error on client >>', error)
       }
@@ -41,19 +52,21 @@ const SuperFara = () => {
       <Header />
 
       <Styled.FormWrapper>
-          { login ? <h1>Login</h1> : <h1>Registration</h1> }
+          <Styled.FormHeader>
+            { isLogin ? <h1>Login</h1> : <h1>Registration</h1> }
+          </Styled.FormHeader>
           <Styled.Form onSubmit={e => e.preventDefault()}>
             <Styled.InputField>
               <Styled.TextLabel>E-mail:</Styled.TextLabel>
-              <Styled.Input onChange={e => setEmail(e.target.value)} />
+              <Styled.Input type="email" onChange={e => setEmail(e.target.value)} />
             </Styled.InputField>
 
             <Styled.InputField>
               <Styled.TextLabel>Password:</Styled.TextLabel>
-              <Styled.Input onChange={e => setPassword(e.target.value)} />
+              <Styled.Input type="password" onChange={e => setPassword(e.target.value)} />
             </Styled.InputField>
 
-            { !login &&
+            { !isLogin &&
               <Styled.InputField>
                 <Styled.TextLabel>Confirm password:</Styled.TextLabel>
                 <Styled.Input onChange={e => setConfirmPassword(e.target.value)} />
@@ -64,9 +77,9 @@ const SuperFara = () => {
           </Styled.Form>
 
           <Styled.SwitchFormBtn>
-            <Styled.SwitchButton onClick={() => setLogin(false)}>Registration</Styled.SwitchButton>
+            <Styled.SwitchButton onClick={() => setIsLogin(false)}>Registration</Styled.SwitchButton>
             {' / '}
-            <Styled.SwitchButton onClick={() => setLogin(true)}>Login</Styled.SwitchButton>
+            <Styled.SwitchButton onClick={() => setIsLogin(true)}>Login</Styled.SwitchButton>
           </Styled.SwitchFormBtn>
         </Styled.FormWrapper>
     </Styled.Container>
