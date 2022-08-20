@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useRouter } from 'next/router'
 import Head from 'next/head'
 import * as Styled from './styles.js'
 import { Header } from '../../components/Header/styles.js'
@@ -12,6 +13,7 @@ const SuperFara = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
+  const router = useRouter()
 
   const sendForm = async () => {
     if (isLogin) {
@@ -21,11 +23,13 @@ const SuperFara = () => {
         })
         .then(data => {
           if (data.data.login.approved) {
+            localStorage.setItem('token', data.data.login.token)
             console.log('====================================');
             console.log('login data >>', data.data.login);
             console.log('====================================');
           }
         })
+        .then(() => router.push('/staffonly/admin/dashboard'))
       } catch (error) {
         console.log('Login error on client >>', error)
       }
@@ -36,7 +40,7 @@ const SuperFara = () => {
             input: { email, password, confirmPassword }
           }
         })
-        setApproved(false)
+        
       } catch (error) {
         console.log('Add user error on client >>', error)
       }
