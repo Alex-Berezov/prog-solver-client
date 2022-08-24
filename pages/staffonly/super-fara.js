@@ -2,9 +2,9 @@ import { useState } from 'react'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 import * as Styled from './styles.js'
-import { Header } from '../../components/Header/styles.js'
+import Header from '../../components/Header/Header'
 import { useMutation } from '@apollo/client'
-import { CREATE_USER, LOGIN } from '../../graphql/mutations/user'
+import { CREATE_USER, LOGIN } from '../../graphql/mutations/user.js'
 
 const SuperFara = () => {
   const [newUser] = useMutation(CREATE_USER)
@@ -18,12 +18,18 @@ const SuperFara = () => {
   const sendForm = async () => {
     if (isLogin) {
       try {
+        console.log('====================================');
+        console.log('login >>', email, password );
+        console.log('====================================');
         await login({
-          variables: { email, password }
+          variables: {
+            input: { email, password }
+          }
         })
         .then(data => {
           if (data.data.login.approved) {
             localStorage.setItem('token', data.data.login.token)
+            localStorage.setItem('email', data.data.login.email)
             console.log('====================================');
             console.log('login data >>', data.data.login);
             console.log('====================================');
@@ -73,7 +79,7 @@ const SuperFara = () => {
             { !isLogin &&
               <Styled.InputField>
                 <Styled.TextLabel>Confirm password:</Styled.TextLabel>
-                <Styled.Input onChange={e => setConfirmPassword(e.target.value)} />
+                <Styled.Input type="password" onChange={e => setConfirmPassword(e.target.value)} />
               </Styled.InputField>
             }
 

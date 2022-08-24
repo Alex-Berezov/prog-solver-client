@@ -7,7 +7,7 @@ const Header = () => {
       <Styled.Container>
         <Styled.NavbarItem>
           <Link href="/">
-            <Logo>Prog Solver</Logo>
+            <Styled.Logo>Prog Solver</Styled.Logo>
           </Link>
         </Styled.NavbarItem>
       </Styled.Container>

@@ -9,9 +9,17 @@ export const CREATE_USER = gql`
 `
 
 export const LOGIN = gql`
-  mutation login($email: String!, $password: String!) {
-    login(email: $email, password: $password) {
+  mutation login($input: LoginInput) {
+    login(input: $input) {
       id, email, password, token, approved
+    }
+  }
+`
+
+export const AUTH = gql`
+  mutation auth($input: AuthInput) {
+    auth(input: $input) {
+      approved
     }
   }
 `

@@ -1,7 +1,7 @@
 import { ThemeProvider } from 'styled-components'
 import GlobalStyle from '../styles/globalstyles'
 import { theme } from '../styles/Theme/commonTheme.js'
-import { ApolloClient, InMemoryCache, ApolloProvider, gql } from '@apollo/client'
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
 
 const client = new ApolloClient({
   uri: 'http://localhost:5000/graphql',
