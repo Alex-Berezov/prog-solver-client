@@ -18,9 +18,6 @@ const SuperFara = () => {
   const sendForm = async () => {
     if (isLogin) {
       try {
-        console.log('====================================');
-        console.log('login >>', email, password );
-        console.log('====================================');
         await login({
           variables: {
             input: { email, password }
@@ -30,9 +27,6 @@ const SuperFara = () => {
           if (data.data.login.approved) {
             localStorage.setItem('token', data.data.login.token)
             localStorage.setItem('email', data.data.login.email)
-            console.log('====================================');
-            console.log('login data >>', data.data.login);
-            console.log('====================================');
           }
         })
         .then(() => router.push('/staffonly/admin/dashboard'))

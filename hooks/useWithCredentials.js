@@ -1,28 +1,30 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useMutation } from '@apollo/client'
 import { AUTH } from '../graphql/mutations/user'
+import { useRouter } from 'next/router'
 
 export const useWithCredentials = () => {
-  const [auth] = useMutation(AUTH)
-  const [approved, setApproved] = useState()
+  const router = useRouter()
+  const [auth] = useMutation(AUTH)  
 
-  useEffect(() => {
+  useEffect(async() => {
+  try {
     const token = localStorage.getItem('token')
     const email = localStorage.getItem('email')
 
-    try {
-      auth({
-        variables: {
-          input: { email, token}
-        }
-      })
-      .then(data => {
-        setApproved(data.data.auth.approved)
-      })
-    } catch (error) {
-      console.log('Auth error on client >>', error)
-    }
+    await auth({
+      variables: {
+        input: { email, token}
+      }
+    })
+    .then(data => {
+      const res = data.data.auth.approved
+      if (!res) {
+        router.push('/staffonly/super-fara')
+      }
+    })
+  } catch (error) {
+    console.log('Auth error on client >>', error)
+  }
   }, [])
-
-  return { approved }
 }
