@@ -1,8 +1,9 @@
 import React from 'react'
-import { useWithCredentials } from '../../../../hooks/useWithCredentials.js'
+import { useWithCredentials } from '../../../../hooks/useWithCredentials'
+
 
 const Dashboard = () => {
-  useWithCredentials()  
+  useWithCredentials()
 
   return (
     <div>
