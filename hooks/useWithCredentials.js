@@ -3,8 +3,6 @@ import { useMutation } from '@apollo/client'
 import { AUTH } from '../graphql/mutations/user'
 import { useRouter } from 'next/router'
 
-// test@test.com
-
 export const useWithCredentials = () => {
   const router = useRouter()
   const [auth] = useMutation(AUTH)

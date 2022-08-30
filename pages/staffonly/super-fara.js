@@ -1,13 +1,13 @@
 import { useState } from 'react'
+import styled from 'styled-components'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 import Header from '../../components/Header/Header'
 import { useMutation } from '@apollo/client'
 import { CREATE_USER, LOGIN } from '../../graphql/mutations/user.js'
-import styled from 'styled-components'
 
 const Container = styled.main`
-  max-width: 1110px;
+  max-width: 1280px;
   width: 100%;
   margin: 0 auto;
 `
