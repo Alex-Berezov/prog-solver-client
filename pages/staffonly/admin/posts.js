@@ -11,22 +11,22 @@ const Container = styled.main`
   margin: 0 auto;
 `
 
-const Dashboard = () => {
+const Posts = () => {
   useWithCredentials()
 
   return (
     <Container>
       <Head>
-        <title>Dashboard</title>
+        <title>Posts</title>
       </Head>
 
       <Header />
 
       <AdminContainer>
-        Dashboard content
+        Posts content
       </AdminContainer>
     </Container>
-  )
-}
+  );
+};
 
-export default Dashboard
+export default Posts;
