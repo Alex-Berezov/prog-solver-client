@@ -1,21 +1,16 @@
 import React from 'react'
 import styled from 'styled-components'
+import * as Styled from '../../../styles/commonStyles.js'
 import { useWithCredentials } from '../../../hooks/useWithCredentials'
 import Header from '../../../components/Header/Header'
 import Head from 'next/head'
 import AdminContainer from '../../../components/AdminContainer/AdminContainer'
 
-const Container = styled.main`
-  max-width: 1280px;
-  width: 100%;
-  margin: 0 auto;
-`
-
 const Dashboard = () => {
   useWithCredentials()
 
   return (
-    <Container>
+    <Styled.Container>
       <Head>
         <title>Dashboard</title>
       </Head>
@@ -25,7 +20,7 @@ const Dashboard = () => {
       <AdminContainer>
         Dashboard content
       </AdminContainer>
-    </Container>
+    </Styled.Container>
   )
 }
 

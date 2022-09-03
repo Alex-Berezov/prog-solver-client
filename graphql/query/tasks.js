@@ -5,6 +5,7 @@ export const GET_TASKS = gql`
     getAllTasks {
       _id
       taskId
+      created
       taskSlug
       title
       text

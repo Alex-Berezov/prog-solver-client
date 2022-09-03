@@ -23,20 +23,3 @@ export const Logo = styled.p`
   color: #3260A1;
   cursor: pointer;
 `
-
-export const AddPostBtn = styled.p`
-  font-style: normal;
-  font-weight: 300;
-  font-size: 14px;
-  line-height: 16px;
-  color: #FFFFFF;
-  background: #67BFFF;
-  box-shadow: 0px 10px 25px rgba(148, 174, 213, 0.15);
-  border-radius: 10px;
-  padding: 5px 13px;
-  position: absolute;
-  left: 50%;
-  top: 25px;
-  transform: translate(-50%);
-  cursor: pointer;
-`

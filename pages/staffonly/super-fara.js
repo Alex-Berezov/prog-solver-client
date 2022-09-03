@@ -1,16 +1,11 @@
 import { useState } from 'react'
 import styled from 'styled-components'
+import * as Styled from '../../styles/commonStyles.js'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 import Header from '../../components/Header/Header'
 import { useMutation } from '@apollo/client'
 import { CREATE_USER, LOGIN } from '../../graphql/mutations/user.js'
-
-const Container = styled.main`
-  max-width: 1280px;
-  width: 100%;
-  margin: 0 auto;
-`
 
 const FormWrapper = styled.div`
   display: flex;
@@ -142,7 +137,7 @@ const SuperFara = () => {
   }
 
   return (
-    <Container>
+    <Styled.Container>
       <Head>
         <title>Login | Registration</title>
       </Head>
@@ -180,7 +175,7 @@ const SuperFara = () => {
             <SwitchButton onClick={() => setIsLogin(true)}>Login</SwitchButton>
           </SwitchFormBtn>
         </FormWrapper>
-    </Container>
+    </Styled.Container>
   )
 };
 

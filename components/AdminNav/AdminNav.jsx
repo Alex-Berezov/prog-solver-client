@@ -8,8 +8,8 @@ const AdminNav = () => {
       <Link href="/staffonly/admin/dashboard">
         <Styled.NavLink>Dashboard</Styled.NavLink>          
       </Link>
-      <Link href="/staffonly/admin/posts">
-        <Styled.NavLink>Posts</Styled.NavLink>          
+      <Link href="/staffonly/admin/tasks">
+        <Styled.NavLink>Tasks</Styled.NavLink>          
       </Link>
     </Styled.NavWrapper>
   )

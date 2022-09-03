@@ -1,22 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import * as Styled from '../../../styles/commonStyles.js'
 import { useWithCredentials } from '../../../hooks/useWithCredentials'
 import Header from '../../../components/Header/Header'
 import Head from 'next/head'
 import AdminContainer from '../../../components/AdminContainer/AdminContainer'
 import { useQuery } from '@apollo/client'
 import { GET_TASKS } from '../../../graphql/query/tasks'
-
-const Container = styled.main`
-  max-width: 1280px;
-  width: 100%;
-  margin: 0 auto;
-`
+import Link from 'next/link.js'
 
 const TaskList = styled.div`
   display: flex;
   flex-direction: column;
-  padding-left: 30px;
 `
 
 const Task = styled.div`
@@ -60,15 +55,22 @@ const TaskInfoItem = styled.span`
   margin-right: 15px;
 `
 
+const AddTaskBtn = styled.button`
+  background: green;
+  border: 1px solid green;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 10px;
+  cursor: pointer;
+`
+
 const Posts = () => {
   useWithCredentials()
 
   const [tasks, setTasks] = useState([])
   const { loading, error, data, refetch } = useQuery(GET_TASKS)
-
-  console.log('====================================');
-  console.log('data >>', data?.getAllTasks);
-  console.log('====================================');
 
   useEffect(() => {
     refetch()
@@ -78,10 +80,8 @@ const Posts = () => {
     if (!loading) return setTasks(data.getAllTasks)
   }, [data])
 
-  if (loading) return <h1>Loading...</h1>
-
   return (
-    <Container>
+    <Styled.Container>
       <Head>
         <title>Posts</title>
       </Head>
@@ -89,6 +89,9 @@ const Posts = () => {
       <Header />
 
       <AdminContainer>
+        <Link href="/staffonly/admin/add-task">
+          <AddTaskBtn>Add task</AddTaskBtn>
+        </Link>
         <TaskList>
           {
             tasks.map(task => (
@@ -98,7 +101,7 @@ const Posts = () => {
                   <TaskEditBtn>Edit</TaskEditBtn>
                 </TaskHeader>
                 <TaskInfo>
-                  <TaskInfoItem>Created: 01.09.2022</TaskInfoItem>
+                  <TaskInfoItem>Created: {task.created}</TaskInfoItem>
                   <TaskInfoItem>Views: 42</TaskInfoItem>
                 </TaskInfo>
               </Task>
@@ -106,7 +109,7 @@ const Posts = () => {
           }
         </TaskList>
       </AdminContainer>
-    </Container>
+    </Styled.Container>
   );
 };
 

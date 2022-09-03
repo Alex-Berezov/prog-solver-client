@@ -4,7 +4,6 @@ import AdminNav from '../AdminNav/AdminNav'
 
 const AdminWrapper = styled.div`
   display: flex;
-
 `
 
 const NavPart = styled.nav`
@@ -13,6 +12,7 @@ const NavPart = styled.nav`
 
 const ContetnPart = styled.div`
   width: 85%;
+  padding-left: 30px;
 `
 
 const AdminContainer = ({ children }) => {
