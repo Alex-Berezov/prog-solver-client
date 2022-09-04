@@ -1,9 +1,10 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import AdminContainer from '../../../components/AdminContainer/AdminContainer.jsx'
-import * as Styled from '../../../styles/commonStyles.js'
+import * as Styled from '../../../styles/Theme/commonStyles.js'
 import Head from 'next/head'
 import Header from '../../../components/Header/Header.jsx'
+import Tabs from '../../../components/Tabs/Tabs.js'
 
 const FormWrapper = styled.div`
   display: flex;
@@ -110,6 +111,7 @@ const LANGUAGES_LIST = [
 
 const AddTask = () => {
   const [checked, setChecked] = useState(LANGUAGES_LIST)
+  const [selectedLang, setSelectedLang] = useState([])
 
   const selectLang = useCallback(id => {
     LANGUAGES_LIST.map(item => {
@@ -120,6 +122,14 @@ const AddTask = () => {
     
     setChecked([...Object.assign(LANGUAGES_LIST)])
   }, [])
+
+  useEffect(() => {
+    const selectedLangArr = checked.filter(item => item.selected)
+    console.log('====================================');
+    console.log('selectedLangArr >>', selectedLangArr);
+    console.log('====================================');
+    setSelectedLang(selectedLangArr)
+  }, [checked])
 
   return (
     <Styled.Container>
@@ -155,7 +165,11 @@ const AddTask = () => {
                     </LangList>
                   ))
                 }
-            </LangListWrapper>
+              </LangListWrapper>
+            </InputField>
+
+            <InputField>
+              <Tabs items={selectedLang} />
             </InputField>
           </Form>
         </FormWrapper>
