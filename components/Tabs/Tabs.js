@@ -2,12 +2,8 @@ import React, { useState } from 'react'
 import * as Styled from './styles.js'
 import TabContent from './TabContent.js'
 
-const Tabs = ({ items }) => {
+const Tabs = ({ items, solutions, setSolutions }) => {
   const [ active, setActive ] = useState(0)
-
-  // console.log('====================================');
-  // console.log('items >>', items);
-  // console.log('====================================');
 
   const openTab = e => setActive(+e.target.dataset.index)
 
@@ -27,7 +23,11 @@ const Tabs = ({ items }) => {
           ))
         }
       </Styled.Tab>
-      {items && items[active] && <TabContent {...items[active]} />}
+      {
+        items
+        && items[active]
+        && <TabContent {...items[active]} solutions={solutions} setSolutions={setSolutions} />
+      }
     </div>
   )
 }

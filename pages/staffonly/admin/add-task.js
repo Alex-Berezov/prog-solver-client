@@ -5,6 +5,7 @@ import * as Styled from '../../../styles/Theme/commonStyles.js'
 import Head from 'next/head'
 import Header from '../../../components/Header/Header.jsx'
 import Tabs from '../../../components/Tabs/Tabs.js'
+import { useWithCredentials } from '../../../hooks/useWithCredentials'
 
 const FormWrapper = styled.div`
   display: flex;
@@ -109,9 +110,15 @@ const LANGUAGES_LIST = [
   {id: 2, lang: 'Pyton', selected: false}
 ]
 
+const SOLUTIONS_ARR = [
+  {id: 0, solution: ''}
+]
+
 const AddTask = () => {
+  useWithCredentials()
   const [checked, setChecked] = useState(LANGUAGES_LIST)
   const [selectedLang, setSelectedLang] = useState([])
+  const [solutions, setSolutions] = useState(SOLUTIONS_ARR)
 
   const selectLang = useCallback(id => {
     LANGUAGES_LIST.map(item => {
@@ -125,9 +132,6 @@ const AddTask = () => {
 
   useEffect(() => {
     const selectedLangArr = checked.filter(item => item.selected)
-    console.log('====================================');
-    console.log('selectedLangArr >>', selectedLangArr);
-    console.log('====================================');
     setSelectedLang(selectedLangArr)
   }, [checked])
 
@@ -169,7 +173,7 @@ const AddTask = () => {
             </InputField>
 
             <InputField>
-              <Tabs items={selectedLang} />
+              <Tabs items={selectedLang} solutions={solutions} setSolutions={setSolutions} />
             </InputField>
           </Form>
         </FormWrapper>

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import styled from 'styled-components'
-import * as Styled from '../../styles/commonStyles.js'
+import * as Styled from '../../styles/Theme/commonStyles.js'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 import Header from '../../components/Header/Header'

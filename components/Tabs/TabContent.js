@@ -2,7 +2,7 @@ import React from 'react'
 import * as Styled from './styles.js'
 import AddSolutionsFields from './AddSolutionsFields'
 
-const TabContent = ({ lang, content }) => {
+const TabContent = ({ lang, content, setSolutions, solutions }) => {
   return (
     <Styled.TabContent>
       <Styled.Title>{`${lang} solutions`}</Styled.Title>
@@ -10,7 +10,7 @@ const TabContent = ({ lang, content }) => {
         {
           content
             ? content
-            : <AddSolutionsFields />
+            : <AddSolutionsFields setSolutions={setSolutions} solutions={solutions} />
         }
       </Styled.Content>
     </Styled.TabContent>

@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import * as Styled from '../../../styles/commonStyles.js'
+import * as Styled from '../../../styles/Theme/commonStyles.js'
 import { useWithCredentials } from '../../../hooks/useWithCredentials'
 import Header from '../../../components/Header/Header'
 import Head from 'next/head'
