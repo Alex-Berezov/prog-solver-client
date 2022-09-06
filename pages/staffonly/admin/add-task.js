@@ -111,21 +111,30 @@ const LANGUAGES_LIST = [
 ]
 
 const SOLUTIONS_ARR = [
-  {id: 0, solution: ''}
+  {
+    lang: "",
+    solutions: [
+      {id: 0, solution: ''}
+    ]
+  }
 ]
 
 const AddTask = () => {
   useWithCredentials()
   const [checked, setChecked] = useState(LANGUAGES_LIST)
   const [selectedLang, setSelectedLang] = useState([])
-  const [solutions, setSolutions] = useState(SOLUTIONS_ARR)
+  const [solutionsList, setSolutionsList] = useState(SOLUTIONS_ARR)
 
-  const selectLang = useCallback(id => {
-    LANGUAGES_LIST.map(item => {
+  const handleSelectLang = useCallback(id => {
+    return LANGUAGES_LIST.map(item => {
       if(item.id === id) {
         item.selected = !item.selected
       }
     })
+  })
+
+  const selectLang = useCallback(id => {
+    handleSelectLang(id)
     
     setChecked([...Object.assign(LANGUAGES_LIST)])
   }, [])
@@ -134,6 +143,10 @@ const AddTask = () => {
     const selectedLangArr = checked.filter(item => item.selected)
     setSelectedLang(selectedLangArr)
   }, [checked])
+
+  console.log('====================================');
+  console.log('solutionsList >>', solutionsList);
+  console.log('====================================');
 
   return (
     <Styled.Container>
@@ -165,7 +178,7 @@ const AddTask = () => {
                   checked.map(item => (
                     <LangList key={item.id} onClick={() => selectLang(item.id)}>
                       <TextLabel>{item.lang}</TextLabel>
-                      <Input type="checkbox" checked={item.selected} />
+                      <Input type="checkbox" onChange={handleSelectLang} checked={item.selected} />
                     </LangList>
                   ))
                 }
@@ -173,7 +186,11 @@ const AddTask = () => {
             </InputField>
 
             <InputField>
-              <Tabs items={selectedLang} solutions={solutions} setSolutions={setSolutions} />
+              <Tabs
+                items={selectedLang}
+                solutionsList={solutionsList}
+                setSolutionsList={setSolutionsList}
+              />
             </InputField>
           </Form>
         </FormWrapper>

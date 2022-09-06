@@ -1,39 +1,44 @@
 import React, { useCallback, useState } from 'react'
 import * as Styled from './styles.js'
 
-const AddSolutionsFields = ({ setSolutions, solutions }) => {
+const AddSolutionsFields = ({ lang, setSolutionsList, solutionsList }) => {
+
+  console.log('====================================');
+  console.log('solutionsList >>', solutionsList.solutions);
+  console.log('====================================');
+
   const handleAddedsolution = useCallback((e) => {
     const ID = e.target.id
     let VALUE = e.target.value
 
-    const res = solutions.find(item => item.solution === VALUE)
+    const res = solutionsList?.solutions?.find(item => item.solution === VALUE)
     if (res) return false
 
-    solutions.map(item => {
+    solutionsList.map(item => {
       if (item.id === +ID) {
-        item.solution = VALUE
+        item.solutions.solution = VALUE
       }
     })
 
-    setSolutions([...Object.assign(solutions)])
+    setSolutionsList([...Object.assign(solutionsList)])
   })
 
   const addNewField = useCallback(() => {
-    setSolutions([...solutions, {id: solutions.length, solution: ''}])
+    setSolutionsList([...solutionsList, {id: solutionsList.solutions.length, solution: ''}])
   })
 
   return (
     <Styled.AddSolutionsFieldsWrapper>
       {
-        solutions.map((item, i) => (
+        solutionsList.map((item, i) => (
           <div key={i}>
             <Styled.AddSolutionsFieldsTitle>Solution #{i + 1}</Styled.AddSolutionsFieldsTitle>
-            <Styled.AddSolutionsFieldsInput
+            <Styled.AddSolutionsFieldsTextarea
               id={item.id}
               onBlur={handleAddedsolution}
             >
-              {item.solution}
-            </Styled.AddSolutionsFieldsInput>
+              {item.solutionList?.solutions?.solution}
+            </Styled.AddSolutionsFieldsTextarea>
           </div>
         ))
       }

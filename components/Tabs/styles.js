@@ -45,7 +45,7 @@ export const AddSolutionsFieldsTitle = styled(H3)`
   margin: 30px 0 10px 0;
 `
 
-export const AddSolutionsFieldsInput = styled.textarea`
+export const AddSolutionsFieldsTextarea = styled.textarea`
   width: 100%;
   display: flex;
   border: 1px solid #E5E5E5;
