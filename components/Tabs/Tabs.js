@@ -7,9 +7,9 @@ const Tabs = ({ items, solutionsList, setSolutionsList }) => {
 
   const openTab = e => setActive(+e.target.dataset.index)
 
-  console.log('====================================');
-  console.log('items >>', items[active]);
-  console.log('====================================');
+  // console.log('====================================');
+  // console.log('items >>', items[active]);
+  // console.log('====================================');
 
   return (
     <div>

@@ -123,7 +123,7 @@ const AddTask = () => {
   useWithCredentials()
   const [checked, setChecked] = useState(LANGUAGES_LIST)
   const [selectedLang, setSelectedLang] = useState([])
-  const [solutionsList, setSolutionsList] = useState(SOLUTIONS_ARR)
+  const [solutionsList, setSolutionsList] = useState(null)
 
   const handleSelectLang = useCallback(id => {
     return LANGUAGES_LIST.map(item => {
@@ -135,7 +135,6 @@ const AddTask = () => {
 
   const selectLang = useCallback(id => {
     handleSelectLang(id)
-    
     setChecked([...Object.assign(LANGUAGES_LIST)])
   }, [])
 
@@ -144,9 +143,18 @@ const AddTask = () => {
     setSelectedLang(selectedLangArr)
   }, [checked])
 
-  console.log('====================================');
-  console.log('solutionsList >>', solutionsList);
-  console.log('====================================');
+  useEffect(() => {
+    const solutionsArr = selectedLang?.map(item => (
+      {
+        lang: item.lang,
+        solutions: [
+          {id: 0, solution: ''}
+        ]
+      }
+    ))
+
+    setSolutionsList(solutionsArr)
+  }, [selectedLang])
 
   return (
     <Styled.Container>

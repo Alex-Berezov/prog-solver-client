@@ -4,7 +4,7 @@ import * as Styled from './styles.js'
 const AddSolutionsFields = ({ lang, setSolutionsList, solutionsList }) => {
 
   console.log('====================================');
-  console.log('solutionsList >>', solutionsList.solutions);
+  console.log('solutionsList >>', solutionsList);
   console.log('====================================');
 
   const handleAddedsolution = useCallback((e) => {
@@ -14,11 +14,18 @@ const AddSolutionsFields = ({ lang, setSolutionsList, solutionsList }) => {
     const res = solutionsList?.solutions?.find(item => item.solution === VALUE)
     if (res) return false
 
-    solutionsList.map(item => {
-      if (item.id === +ID) {
-        item.solutions.solution = VALUE
+    const some = solutionsList.map(item => {
+      if (item.lang === lang) {
+        if (item.solutions[0].id === +ID) {
+          item.solutions[0].solution = VALUE
+        }
       }
+      
     })
+
+    console.log('====================================');
+    console.log('some >>', some);
+    console.log('====================================');
 
     setSolutionsList([...Object.assign(solutionsList)])
   })
