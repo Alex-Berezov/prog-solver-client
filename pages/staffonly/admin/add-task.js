@@ -144,11 +144,11 @@ const AddTask = () => {
   }, [checked])
 
   useEffect(() => {
-    const solutionsArr = selectedLang?.map(item => (
+    const solutionsArr = selectedLang?.map((item, i) => (
       {
         lang: item.lang,
         solutions: [
-          {id: 0, solution: ''}
+          {id: i, solution: ''}
         ]
       }
     ))
