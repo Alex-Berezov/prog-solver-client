@@ -6,6 +6,7 @@ import Head from 'next/head'
 import Header from '../../../components/Header/Header.jsx'
 import Tabs from '../../../components/Tabs/Tabs.js'
 import { useWithCredentials } from '../../../hooks/useWithCredentials'
+import { langList } from '../../../data/langList'
 
 const FormWrapper = styled.div`
   display: flex;
@@ -77,84 +78,27 @@ const FormBtn = styled.button`
   }
 `
 
-const LangListWrapper = styled.div`
-  display: flex;
-`
-
-const LangList = styled.div`
-  display: flex;
-  align-items: center;
-  margin-right: 10px;
-  border: 1px solid grey;
-  border-radius: 3px;
-  padding: 5px;
-  cursor: pointer;
-
-  ${TextLabel} {
-    margin: 0;
-    padding: 0;
-    margin-right: 5px;
-    font-weight: 400;
-  }
-
-  ${Input} {
-    margin: 0;
-    padding: 0;
-  }
-`
-
-
-const LANGUAGES_LIST = [
-  {id: 0, lang: 'JS', selected: false},
-  {id: 1, lang: 'PHP', selected: false},
-  {id: 2, lang: 'Pyton', selected: false}
-]
-
-const SOLUTIONS_ARR = [
-  {
-    lang: "",
-    solutions: [
-      {id: 0, solution: ''}
-    ]
-  }
-]
-
 const AddTask = () => {
   useWithCredentials()
-  const [checked, setChecked] = useState(LANGUAGES_LIST)
-  const [selectedLang, setSelectedLang] = useState([])
-  const [solutionsList, setSolutionsList] = useState(null)
+  const [solutionsList, setSolutionsList] = useState([])
 
-  const handleSelectLang = useCallback(id => {
-    return LANGUAGES_LIST.map(item => {
-      if(item.id === id) {
-        item.selected = !item.selected
-      }
-    })
-  })
-
-  const selectLang = useCallback(id => {
-    handleSelectLang(id)
-    setChecked([...Object.assign(LANGUAGES_LIST)])
-  }, [])
-
-  useEffect(() => {
-    const selectedLangArr = checked.filter(item => item.selected)
-    setSelectedLang(selectedLangArr)
-  }, [checked])
-
-  useEffect(() => {
-    const solutionsArr = selectedLang?.map((item, i) => (
+  useEffect(() => {    
+    const solutionsArr = langList?.map(item => (
       {
         lang: item.lang,
         solutions: [
-          {id: i, solution: ''}
+          {id: `${item.lang}-${0}`, solution: ''},
+          {id: `${item.lang}-${1}`, solution: ''},
+          {id: `${item.lang}-${2}`, solution: ''},
+          {id: `${item.lang}-${3}`, solution: ''},
+          {id: `${item.lang}-${4}`, solution: ''},
+          {id: `${item.lang}-${5}`, solution: ''}
         ]
       }
     ))
 
     setSolutionsList(solutionsArr)
-  }, [selectedLang])
+  }, [])
 
   return (
     <Styled.Container>
@@ -180,25 +124,16 @@ const AddTask = () => {
             </InputField>
 
             <InputField>
-              <TextLabel>Languages:</TextLabel>
-              <LangListWrapper>
-                {
-                  checked.map(item => (
-                    <LangList key={item.id} onClick={() => selectLang(item.id)}>
-                      <TextLabel>{item.lang}</TextLabel>
-                      <Input type="checkbox" onChange={handleSelectLang} checked={item.selected} />
-                    </LangList>
-                  ))
-                }
-              </LangListWrapper>
-            </InputField>
-
-            <InputField>
               <Tabs
-                items={selectedLang}
+                items={langList}
                 solutionsList={solutionsList}
                 setSolutionsList={setSolutionsList}
               />
+            </InputField>
+
+            <InputField>
+              <TextLabel>Task image:</TextLabel>
+              <Input type="file" />
             </InputField>
           </Form>
         </FormWrapper>
