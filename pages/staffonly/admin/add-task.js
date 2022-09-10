@@ -7,6 +7,9 @@ import Header from '../../../components/Header/Header.jsx'
 import Tabs from '../../../components/Tabs/Tabs.js'
 import { useWithCredentials } from '../../../hooks/useWithCredentials'
 import { langList } from '../../../data/langList'
+import { useRouter } from 'next/router.js'
+import { useMutation } from '@apollo/client'
+import { CREATE_TASK } from '../../../graphql/mutations/tasks'
 
 const FormWrapper = styled.div`
   display: flex;
@@ -80,7 +83,16 @@ const FormBtn = styled.button`
 
 const AddTask = () => {
   useWithCredentials()
+
+  const imgUrl = 'https://images.unsplash.com/photo-1462804993656-fac4ff489837?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80'
+  const imgAuthor = 'https://unsplash.com/photos/FtBS0p23fcc'
+
+  const [newTask] = useMutation(CREATE_TASK)
+  const [title, setTitle] = useState('')
+  const [text, setText] = useState('')
   const [solutionsList, setSolutionsList] = useState([])
+
+  const router = useRouter()
 
   useEffect(() => {    
     const solutionsArr = langList?.map(item => (
@@ -100,6 +112,26 @@ const AddTask = () => {
     setSolutionsList(solutionsArr)
   }, [])
 
+  const addTask = useCallback(async () => {
+
+    console.log('====================================');
+    console.log('solutionsList >>', solutionsList);
+    console.log('====================================');
+
+    try {
+      await newTask({
+        variables: {
+          input: {
+            title, text, solutionsList, imgUrl, imgAuthor
+          }
+        }
+      })
+      .than(() => router.push('/staffonly/admin/tasks'))
+    } catch (error) {
+      console.log('Add task error on client >>', error)
+    }
+  })
+
   return (
     <Styled.Container>
       <Head>
@@ -115,12 +147,12 @@ const AddTask = () => {
           <Form onSubmit={e => e.preventDefault()}>
             <InputField>
               <TextLabel>Task title:</TextLabel>
-              <Input />
+              <Input onChange={e => setTitle(e.target.value)} />
             </InputField>
 
             <InputField>
               <TextLabel>Task description:</TextLabel>
-              <TextArea />
+              <TextArea onChange={e => setText(e.target.value)} />
             </InputField>
 
             <InputField>
@@ -131,10 +163,7 @@ const AddTask = () => {
               />
             </InputField>
 
-            <InputField>
-              <TextLabel>Task image:</TextLabel>
-              <Input type="file" />
-            </InputField>
+            <FormBtn onClick={addTask}>Add Task</FormBtn>
           </Form>
         </FormWrapper>
       </AdminContainer>
