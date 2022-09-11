@@ -6,9 +6,19 @@ export const CREATE_TASK = gql`
         title
         taskSlug
         text
-        solutionsList
+        solutionsList {id, solution}
         imgUrl
         imgAuthor
+      }
+    }
+`
+
+export const UPDATE_TASK = gql`
+  mutation updateTask($taskSlug: String, $input: TaskUpdateInput) {
+      updateTask (taskSlug: $taskSlug, input: $input) {
+        title
+        text
+        solutionsList {id, solution}
       }
     }
 `

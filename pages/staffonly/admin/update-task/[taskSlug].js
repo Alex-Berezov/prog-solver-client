@@ -1,15 +1,16 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
-import AdminContainer from '../../../components/AdminContainer/AdminContainer.jsx'
-import * as Styled from '../../../styles/Theme/commonStyles.js'
+import AdminContainer from '../../../../components/AdminContainer/AdminContainer.jsx'
+import * as Styled from '../../../../styles/Theme/commonStyles.js'
 import Head from 'next/head'
-import Header from '../../../components/Header/Header.jsx'
-import Tabs from '../../../components/Tabs/Tabs.js'
-import { useWithCredentials } from '../../../hooks/useWithCredentials'
-import { langList } from '../../../data/langList'
+import Header from '../../../../components/Header/Header.jsx'
+import Tabs from '../../../../components/Tabs/Tabs.js'
+import { useWithCredentials } from '../../../../hooks/useWithCredentials'
+import { langList } from '../../../../data/langList'
 import { useRouter } from 'next/router.js'
-import { useMutation } from '@apollo/client'
-import { CREATE_TASK } from '../../../graphql/mutations/tasks'
+import { useMutation, useQuery } from '@apollo/client'
+import { UPDATE_TASK } from '../../../../graphql/mutations/tasks'
+import { GET_TASK } from '../../../../graphql/query/tasks.js'
 
 const FormWrapper = styled.div`
   display: flex;
@@ -81,41 +82,41 @@ const FormBtn = styled.button`
   }
 `
 
-const AddTask = () => {
+const UpdateTask = () => {
   useWithCredentials()
+  const router = useRouter()
+  const taskSlug = router.asPath.split('/').reverse()[0]
 
-  const imgUrl = 'https://images.unsplash.com/photo-1462804993656-fac4ff489837?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80'
-  const imgAuthor = 'https://unsplash.com/photos/FtBS0p23fcc'
+  const { data } = useQuery(GET_TASK, {
+    variables: {
+      taskSlug
+    }
+  })
 
-  const [newTask] = useMutation(CREATE_TASK)
+  console.log('====================================');
+  console.log('data >>', data);
+  console.log('====================================');
+
+  const [updateTask] = useMutation(UPDATE_TASK)  
   const [title, setTitle] = useState('')
   const [text, setText] = useState('')
   const [solutionsList, setSolutionsList] = useState([])
 
-  const router = useRouter()
+  useEffect(() => {
+    setTitle(data?.getTask?.title)
+    setText(data?.getTask?.text)
+    setSolutionsList(data?.getTask?.solutionsList)
+  }, [data])
 
-  useEffect(() => {    
-    const solutionsArr = langList?.map(item => (
-      {
-        lang: item.lang,
-        solutions: [
-          {id: `${item.lang}-${0}`, solution: ''},
-          {id: `${item.lang}-${1}`, solution: ''},
-          {id: `${item.lang}-${2}`, solution: ''},
-          {id: `${item.lang}-${3}`, solution: ''},
-          {id: `${item.lang}-${4}`, solution: ''},
-          {id: `${item.lang}-${5}`, solution: ''}
-        ]
-      }
-    ))
+  console.log('====================================');
+  console.log('solutionsList >>', solutionsList);
+  console.log('====================================');
 
-    setSolutionsList(solutionsArr)
-  }, [])
-
-  const addTask = useCallback(async () => {
+  const sendUpdatesTask = useCallback(async () => {
     try {
-      await newTask({
+      await updateTask({
         variables: {
+          taskSlug: taskSlug,
           input: {
             title, text, solutionsList, imgUrl, imgAuthor
           }
@@ -123,7 +124,7 @@ const AddTask = () => {
       })
       .then(() => router.push('/staffonly/admin/tasks'))
     } catch (error) {
-      console.log('Add task error on client >>', error)
+      console.log('Add update task error on client >>', error)
     }
   })
 
@@ -158,7 +159,7 @@ const AddTask = () => {
               />
             </InputField>
 
-            <FormBtn onClick={addTask}>Add Task</FormBtn>
+            <FormBtn onClick={sendUpdatesTask}>Add Task</FormBtn>
           </Form>
         </FormWrapper>
       </AdminContainer>
@@ -166,4 +167,4 @@ const AddTask = () => {
   )
 }
 
-export default AddTask
+export default UpdateTask

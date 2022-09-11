@@ -98,7 +98,12 @@ const Posts = () => {
               <Task key={task.id}>
                 <TaskHeader>
                   <TaskTitle>{task.title}</TaskTitle>
-                  <TaskEditBtn>Edit</TaskEditBtn>
+                  <Link
+                    href={`/staffonly/admin/update-task/${encodeURIComponent(task.taskSlug)}`}
+                    as={`/staffonly/admin/update-task/${task.taskSlug}`}
+                  >
+                    <TaskEditBtn>Edit</TaskEditBtn>
+                  </Link>
                 </TaskHeader>
                 <TaskInfo>
                   <TaskInfoItem>Created: {task.created}</TaskInfoItem>
