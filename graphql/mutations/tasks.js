@@ -6,7 +6,11 @@ export const CREATE_TASK = gql`
         title
         taskSlug
         text
-        solutionsList {id, solution}
+        solutionsList {
+          lang solutions {
+            id solution
+          }
+        }
         imgUrl
         imgAuthor
       }
@@ -18,7 +22,11 @@ export const UPDATE_TASK = gql`
       updateTask (taskSlug: $taskSlug, input: $input) {
         title
         text
-        solutionsList {id, solution}
+        solutionsList {
+          lang solutions {
+            id solution
+          }
+        }
       }
     }
 `

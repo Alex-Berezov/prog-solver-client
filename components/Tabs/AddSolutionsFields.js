@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback } from 'react'
 import * as Styled from './styles.js'
 
 const AddSolutionsFields = ({ lang, setSolutionsList, solutionsList }) => {

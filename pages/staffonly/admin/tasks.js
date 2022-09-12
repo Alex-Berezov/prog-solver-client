@@ -42,6 +42,7 @@ const TaskEditBtn = styled.button`
   justify-content: center;
   align-items: center;
   padding: 5px 10px;
+  cursor: pointer;
 `
 
 const TaskInfo = styled.div`
@@ -70,7 +71,7 @@ const Posts = () => {
   useWithCredentials()
 
   const [tasks, setTasks] = useState([])
-  const { loading, error, data, refetch } = useQuery(GET_TASKS)
+  const { loading, data, refetch } = useQuery(GET_TASKS)
 
   useEffect(() => {
     refetch()

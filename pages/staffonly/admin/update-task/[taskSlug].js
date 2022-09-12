@@ -93,10 +93,6 @@ const UpdateTask = () => {
     }
   })
 
-  console.log('====================================');
-  console.log('data >>', data);
-  console.log('====================================');
-
   const [updateTask] = useMutation(UPDATE_TASK)  
   const [title, setTitle] = useState('')
   const [text, setText] = useState('')
@@ -105,7 +101,15 @@ const UpdateTask = () => {
   useEffect(() => {
     setTitle(data?.getTask?.title)
     setText(data?.getTask?.text)
-    setSolutionsList(data?.getTask?.solutionsList)
+
+    const newSolutionsList = data && JSON.parse(JSON.stringify(data?.getTask?.solutionsList))
+    newSolutionsList?.forEach(item => {
+      delete item.__typename
+      item.solutions.forEach(el => {
+        delete el.__typename
+      })
+    })
+    setSolutionsList(newSolutionsList)
   }, [data])
 
   console.log('====================================');
@@ -118,37 +122,37 @@ const UpdateTask = () => {
         variables: {
           taskSlug: taskSlug,
           input: {
-            title, text, solutionsList, imgUrl, imgAuthor
+            title, text, solutionsList
           }
         }
       })
       .then(() => router.push('/staffonly/admin/tasks'))
     } catch (error) {
-      console.log('Add update task error on client >>', error)
+      console.log('Update task error on client >>', error)
     }
   })
 
   return (
     <Styled.Container>
       <Head>
-        <title>Add new task</title>
+        <title>Update task</title>
       </Head>
 
       <Header />
 
       <AdminContainer>
-        <Styled.H3>Add new task</Styled.H3>
+        <Styled.H3>Update task</Styled.H3>
 
         <FormWrapper>
           <Form onSubmit={e => e.preventDefault()}>
             <InputField>
               <TextLabel>Task title:</TextLabel>
-              <Input onChange={e => setTitle(e.target.value)} />
+              <Input onChange={e => setTitle(e.target.value)} value={title} />
             </InputField>
 
             <InputField>
               <TextLabel>Task description:</TextLabel>
-              <TextArea onChange={e => setText(e.target.value)} />
+              <TextArea onChange={e => setText(e.target.value)} value={text} />
             </InputField>
 
             <InputField>
@@ -159,7 +163,7 @@ const UpdateTask = () => {
               />
             </InputField>
 
-            <FormBtn onClick={sendUpdatesTask}>Add Task</FormBtn>
+            <FormBtn onClick={sendUpdatesTask}>Update Task</FormBtn>
           </Form>
         </FormWrapper>
       </AdminContainer>

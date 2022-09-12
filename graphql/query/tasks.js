@@ -8,7 +8,11 @@ export const GET_TASKS = gql`
       taskSlug
       title
       text
-      solutionsList {id, solution}
+      solutionsList {
+        lang solutions {
+          id solution
+        }
+      }
       imgUrl
       imgAuthor
     }
@@ -19,10 +23,11 @@ export const GET_TASK = gql`
   query getTask($taskSlug: String) {
     getTask(taskSlug: $taskSlug) {
       title
+      taskSlug
       text
       solutionsList {
-        lang, solutions {
-          id, solution
+        lang solutions {
+          id solution
         }
       }
     }
