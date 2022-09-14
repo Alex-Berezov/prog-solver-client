@@ -87,11 +87,15 @@ const UpdateTask = () => {
   const router = useRouter()
   const taskSlug = router.asPath.split('/').reverse()[0]
 
-  const { data } = useQuery(GET_TASK, {
+  const { data, refetch } = useQuery(GET_TASK, {
     variables: {
       taskSlug
     }
   })
+
+  useEffect(() => {
+    refetch()
+  }, [])
 
   const [updateTask] = useMutation(UPDATE_TASK)  
   const [title, setTitle] = useState('')
@@ -111,10 +115,6 @@ const UpdateTask = () => {
     })
     setSolutionsList(newSolutionsList)
   }, [data])
-
-  console.log('====================================');
-  console.log('solutionsList >>', solutionsList);
-  console.log('====================================');
 
   const sendUpdatesTask = useCallback(async () => {
     try {
