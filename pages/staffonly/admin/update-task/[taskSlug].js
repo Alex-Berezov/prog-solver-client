@@ -93,9 +93,7 @@ const UpdateTask = () => {
     }
   })
 
-  useEffect(() => {
-    refetch()
-  }, [])
+  refetch()
 
   const [updateTask] = useMutation(UPDATE_TASK)  
   const [title, setTitle] = useState('')

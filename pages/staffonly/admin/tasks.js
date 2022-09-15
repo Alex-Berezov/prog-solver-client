@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import * as Styled from '../../../styles/Theme/commonStyles.js'
 import { useWithCredentials } from '../../../hooks/useWithCredentials'
@@ -8,6 +8,8 @@ import AdminContainer from '../../../components/AdminContainer/AdminContainer'
 import { useQuery } from '@apollo/client'
 import { GET_TASKS } from '../../../graphql/query/tasks'
 import Link from 'next/link.js'
+import Modal from '../../../components/Modal/Modal'
+import DeleteTaskModal from '../../../components/DeleteTaskModal/DeleteTaskModal'
 
 const TaskList = styled.div`
   display: flex;
@@ -34,9 +36,26 @@ const TaskTitle = styled.h3`
   font-weight: 400;
 `
 
+const TaskButtons = styled.div`
+  display: flex;
+  align-items: center;
+`
+
 const TaskEditBtn = styled.button`
   background: green;
   border: 1px solid green;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-right: 10px;
+`
+
+const TaskDeleteBtn = styled.button`
+  background: red;
+  border: 1px solid red;
   border-radius: 5px;
   display: flex;
   justify-content: center;
@@ -71,6 +90,8 @@ const Posts = () => {
   useWithCredentials()
 
   const [tasks, setTasks] = useState([])
+  const [deleteModal, setDeleteModal] = useState(false)
+  const [taskId, setTaskId] = useState('')
   const { loading, data, refetch } = useQuery(GET_TASKS)
 
   useEffect(() => {
@@ -78,8 +99,18 @@ const Posts = () => {
   }, [])
 
   useEffect(() => {
-    if (!loading) return setTasks(data.getAllTasks)
+    refetch()
+  }, [deleteModal])
+
+  useEffect(() => {
+    const newTasksList = data && JSON.parse(JSON.stringify(data.getAllTasks)).reverse()
+    if (!loading) return setTasks(newTasksList)
   }, [data])
+
+  const onClickDeleteTask = useCallback((id) => {
+    setTaskId(id)
+    setDeleteModal(true)
+  })
 
   return (
     <Styled.Container>
@@ -96,15 +127,20 @@ const Posts = () => {
         <TaskList>
           {
             tasks.map(task => (
-              <Task key={task.id}>
+              <Task key={task._id}>
                 <TaskHeader>
                   <TaskTitle>{task.title}</TaskTitle>
-                  <Link
-                    href={`/staffonly/admin/update-task/${encodeURIComponent(task.taskSlug)}`}
-                    as={`/staffonly/admin/update-task/${task.taskSlug}`}
-                  >
-                    <TaskEditBtn>Edit</TaskEditBtn>
-                  </Link>
+                  <TaskButtons>
+                    <Link
+                      href={`/staffonly/admin/update-task/${encodeURIComponent(task.taskSlug)}`}
+                      as={`/staffonly/admin/update-task/${task.taskSlug}`}
+                    >
+                      <TaskEditBtn>Edit</TaskEditBtn>
+                    </Link>
+                    <TaskDeleteBtn onClick={() => onClickDeleteTask(task._id)}>
+                      Delete
+                    </TaskDeleteBtn>
+                  </TaskButtons>
                 </TaskHeader>
                 <TaskInfo>
                   <TaskInfoItem>Created: {task.created}</TaskInfoItem>
@@ -114,6 +150,9 @@ const Posts = () => {
             ))
           }
         </TaskList>
+        <Modal active={deleteModal} setActive={setDeleteModal} >
+          <DeleteTaskModal setActive={setDeleteModal} taskId={taskId} />
+        </Modal>
       </AdminContainer>
     </Styled.Container>
   );

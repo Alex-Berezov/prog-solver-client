@@ -30,3 +30,12 @@ export const UPDATE_TASK = gql`
       }
     }
 `
+
+export const DELETE_TASK = gql`
+  mutation deleteTask($taskId: String) {
+    deleteTask (taskId: $taskId) {
+      title
+      taskSlug
+    }
+  }
+`
