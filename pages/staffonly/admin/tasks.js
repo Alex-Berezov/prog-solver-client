@@ -86,13 +86,24 @@ const AddTaskBtn = styled.button`
   cursor: pointer;
 `
 
+const PAGE_SIZE = 3
+
 const Posts = () => {
   useWithCredentials()
 
   const [tasks, setTasks] = useState([])
   const [deleteModal, setDeleteModal] = useState(false)
   const [taskId, setTaskId] = useState('')
-  const { loading, data, refetch } = useQuery(GET_TASKS)
+  const { loading, data, refetch } = useQuery(GET_TASKS, {
+    variables: {
+      offset: 0,
+      limit: PAGE_SIZE
+    }
+  })
+
+  console.log('====================================');
+  console.log('data >>', data);
+  console.log('====================================');
 
   useEffect(() => {
     refetch()
