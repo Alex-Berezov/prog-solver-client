@@ -94,12 +94,7 @@ const Posts = () => {
   const [tasks, setTasks] = useState([])
   const [deleteModal, setDeleteModal] = useState(false)
   const [taskId, setTaskId] = useState('')
-  const { loading, data, refetch } = useQuery(GET_TASKS, {
-    variables: {
-      offset: 0,
-      limit: PAGE_SIZE
-    }
-  })
+  const { loading, data, refetch } = useQuery(GET_TASKS)
 
   console.log('====================================');
   console.log('data >>', data);
@@ -114,7 +109,7 @@ const Posts = () => {
   }, [deleteModal])
 
   useEffect(() => {
-    const newTasksList = data && JSON.parse(JSON.stringify(data.getAllTasks)).reverse()
+    const newTasksList = data && JSON.parse(JSON.stringify(data.getAllTasks))
     if (!loading) return setTasks(newTasksList)
   }, [data])
 
@@ -137,7 +132,7 @@ const Posts = () => {
         </Link>
         <TaskList>
           {
-            tasks.map(task => (
+            tasks?.map(task => (
               <Task key={task._id}>
                 <TaskHeader>
                   <TaskTitle>{task.title}</TaskTitle>

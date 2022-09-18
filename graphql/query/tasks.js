@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client'
 
 export const GET_TASKS = gql`
-  query getAllTasks($offset: Int, $limit: Int) {
-    getAllTasks(offset: $offset, limit: $limit) {
+  query getAllTasks($offset: Int, $first: Int) {
+    getAllTasks(offset: $offset, first: $first) {
       _id
       created
       taskSlug
