@@ -86,7 +86,19 @@ const AddTaskBtn = styled.button`
   cursor: pointer;
 `
 
-const PAGE_SIZE = 3
+const LoadMoreButton = styled.button`
+  background: yellow;
+  border: 1px solid yellow;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 10px;
+  cursor: pointer;
+`
+
+const first = 6
+const delay = true
 
 const Posts = () => {
   useWithCredentials()
@@ -94,11 +106,10 @@ const Posts = () => {
   const [tasks, setTasks] = useState([])
   const [deleteModal, setDeleteModal] = useState(false)
   const [taskId, setTaskId] = useState('')
-  const { loading, data, refetch } = useQuery(GET_TASKS)
-
-  console.log('====================================');
-  console.log('data >>', data);
-  console.log('====================================');
+  const { error, loading, data, refetch, fetchMore, networkStatus } = useQuery(GET_TASKS, {
+    variables: { first, delay },
+    notifyOnNetworkStatusChange: true
+  })
 
   useEffect(() => {
     refetch()
@@ -109,7 +120,7 @@ const Posts = () => {
   }, [deleteModal])
 
   useEffect(() => {
-    const newTasksList = data && JSON.parse(JSON.stringify(data.getAllTasks))
+    const newTasksList = data && JSON.parse(JSON.stringify(data.getAllTasks.edges))
     if (!loading) return setTasks(newTasksList)
   }, [data])
 
@@ -117,6 +128,25 @@ const Posts = () => {
     setTaskId(id)
     setDeleteModal(true)
   })
+
+  if (error) {
+    console.log(error.message)
+    return <div>An error occurred</div>
+  }
+  // if (loading || !data) return <div>Loading...</div>
+  // if  (networkStatus === 1) return <div>Loading...</div>
+
+  const hasNextPage = data?.getAllTasks.pageInfo.hasNextPage
+  const after = data?.getAllTasks.pageInfo.endCursor
+  const isRefetching = networkStatus === 3
+
+  console.log('====================================');
+  console.log('networkStatus >>', networkStatus);
+  console.log('====================================');
+
+  console.log('====================================');
+  console.log('data >>', data);
+  console.log('====================================');
 
   return (
     <Styled.Container>
@@ -133,29 +163,47 @@ const Posts = () => {
         <TaskList>
           {
             tasks?.map(task => (
-              <Task key={task._id}>
+              <Task key={task.node._id}>
                 <TaskHeader>
-                  <TaskTitle>{task.title}</TaskTitle>
+                  <TaskTitle>{task.node.title}</TaskTitle>
                   <TaskButtons>
                     <Link
-                      href={`/staffonly/admin/update-task/${encodeURIComponent(task.taskSlug)}`}
-                      as={`/staffonly/admin/update-task/${task.taskSlug}`}
+                      href={`/staffonly/admin/update-task/${encodeURIComponent(task.node.taskSlug)}`}
+                      as={`/staffonly/admin/update-task/${task.node.taskSlug}`}
                     >
                       <TaskEditBtn>Edit</TaskEditBtn>
                     </Link>
-                    <TaskDeleteBtn onClick={() => onClickDeleteTask(task._id)}>
+                    <TaskDeleteBtn onClick={() => onClickDeleteTask(task.node._id)}>
                       Delete
                     </TaskDeleteBtn>
                   </TaskButtons>
                 </TaskHeader>
                 <TaskInfo>
-                  <TaskInfoItem>Created: {task.created}</TaskInfoItem>
+                  <TaskInfoItem>Created: {task.node.created}</TaskInfoItem>
                   <TaskInfoItem>Views: 42</TaskInfoItem>
                 </TaskInfo>
               </Task>
             ))
           }
         </TaskList>
+        {
+          hasNextPage &&
+            <LoadMoreButton
+              disabled={isRefetching}
+              loading={isRefetching}
+              onClick={() => 
+                fetchMore({
+                  variables: {
+                    first,
+                    after,
+                    delay
+                  }
+                })
+              }
+            >
+              Load more
+            </LoadMoreButton>
+        }
         <Modal active={deleteModal} setActive={setDeleteModal} >
           <DeleteTaskModal setActive={setDeleteModal} taskId={taskId} />
         </Modal>
