@@ -1,28 +1,15 @@
 import React from 'react'
-import styled from 'styled-components'
+import * as Styled from './styles.js'
 import AdminNav from '../AdminNav/AdminNav'
-
-const AdminWrapper = styled.div`
-  display: flex;
-`
-
-const NavPart = styled.nav`
-  width: 15%;
-`
-
-const ContetnPart = styled.div`
-  width: 85%;
-  padding-left: 30px;
-`
 
 const AdminContainer = ({ children }) => {
   return (
-    <AdminWrapper>
-      <NavPart>
+    <Styled.AdminWrapper>
+      <Styled.NavPart>
         <AdminNav />
-      </NavPart>
-      <ContetnPart>{children}</ContetnPart>
-    </AdminWrapper>
+      </Styled.NavPart>
+      <Styled.ContetnPart>{children}</Styled.ContetnPart>
+    </Styled.AdminWrapper>
   )
 }
 

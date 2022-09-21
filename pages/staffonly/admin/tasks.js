@@ -76,6 +76,7 @@ const TaskInfoItem = styled.span`
 `
 
 const AddTaskBtn = styled.button`
+  margin-bottom: 10px;
   background: green;
   border: 1px solid green;
   border-radius: 5px;
@@ -93,6 +94,7 @@ const LoadMoreButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 20px auto;
   padding: 5px 10px;
   cursor: pointer;
 `
@@ -106,12 +108,16 @@ const Posts = () => {
   const [tasks, setTasks] = useState([])
   const [deleteModal, setDeleteModal] = useState(false)
   const [taskId, setTaskId] = useState('')
-  const { error, loading, data, refetch, fetchMore, networkStatus } = useQuery(GET_TASKS, {
+  const [hasNextPage, setHasNextPage] = useState(true)
+  const [after, setAfter] = useState()
+  
+  const { error, loading, data, refetch, fetchMore } = useQuery(GET_TASKS, {
     variables: { first, delay },
     notifyOnNetworkStatusChange: true
   })
 
   useEffect(() => {
+    setHasNextPage(true)
     refetch()
   }, [])
 
@@ -120,6 +126,7 @@ const Posts = () => {
   }, [deleteModal])
 
   useEffect(() => {
+    setAfter(data?.getAllTasks.pageInfo.endCursor)
     const newTasksList = data && JSON.parse(JSON.stringify(data.getAllTasks.edges))
     if (!loading) return setTasks(newTasksList)
   }, [data])
@@ -133,20 +140,21 @@ const Posts = () => {
     console.log(error.message)
     return <div>An error occurred</div>
   }
-  // if (loading || !data) return <div>Loading...</div>
-  // if  (networkStatus === 1) return <div>Loading...</div>
 
-  const hasNextPage = data?.getAllTasks.pageInfo.hasNextPage
-  const after = data?.getAllTasks.pageInfo.endCursor
-  const isRefetching = networkStatus === 3
-
-  console.log('====================================');
-  console.log('networkStatus >>', networkStatus);
-  console.log('====================================');
-
-  console.log('====================================');
-  console.log('data >>', data);
-  console.log('====================================');
+  const fetchMoreTasks = useCallback(() => 
+    fetchMore({
+      variables: {
+        first,
+        after,
+        delay
+      }
+    })
+    .then(data => {
+      setTasks(data?.data?.getAllTasks?.edges)
+      setHasNextPage(data?.data?.getAllTasks.pageInfo.hasNextPage)
+      setAfter(data?.data?.getAllTasks.pageInfo.endCursor)
+    })
+  )
 
   return (
     <Styled.Container>
@@ -188,19 +196,7 @@ const Posts = () => {
         </TaskList>
         {
           hasNextPage &&
-            <LoadMoreButton
-              disabled={isRefetching}
-              loading={isRefetching}
-              onClick={() => 
-                fetchMore({
-                  variables: {
-                    first,
-                    after,
-                    delay
-                  }
-                })
-              }
-            >
+            <LoadMoreButton onClick={fetchMoreTasks}>
               Load more
             </LoadMoreButton>
         }
