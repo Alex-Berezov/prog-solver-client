@@ -42,3 +42,31 @@ export const GET_TASK = gql`
     }
   }
 `
+
+export const SEARCH_TASK = gql`
+  query searchTask ($title: String) {
+    searchTask (title: $title) {
+      pageInfo {
+        endCursor
+        hasNextPage
+      }
+      edges {
+        cursor
+        node {
+          _id
+          created
+          taskSlug
+          title
+          text
+          solutionsList {
+            lang
+            solutions {
+              id
+              solution
+            }
+          }
+        }
+      }
+    }
+  }
+`

@@ -6,7 +6,7 @@ import Header from '../../../components/Header/Header'
 import Head from 'next/head'
 import AdminContainer from '../../../components/AdminContainer/AdminContainer'
 import { useQuery } from '@apollo/client'
-import { GET_TASKS } from '../../../graphql/query/tasks'
+import { GET_TASKS, SEARCH_TASK } from '../../../graphql/query/tasks'
 import Link from 'next/link.js'
 import Modal from '../../../components/Modal/Modal'
 import DeleteTaskModal from '../../../components/DeleteTaskModal/DeleteTaskModal'
@@ -14,6 +14,16 @@ import DeleteTaskModal from '../../../components/DeleteTaskModal/DeleteTaskModal
 const TaskList = styled.div`
   display: flex;
   flex-direction: column;
+`
+
+const TaskListHeader = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`
+
+const SearchTask = styled.input`
+
 `
 
 const Task = styled.div`
@@ -110,6 +120,7 @@ const Posts = () => {
   const [taskId, setTaskId] = useState('')
   const [hasNextPage, setHasNextPage] = useState(true)
   const [after, setAfter] = useState()
+  const [searchValue, setSearchValue] = useState('')
   
   const { error, loading, data, refetch, fetchMore } = useQuery(GET_TASKS, {
     variables: { first, delay },
@@ -141,6 +152,31 @@ const Posts = () => {
     return <div>An error occurred</div>
   }
 
+  const handleSearchChange = useCallback((e) => {
+    setSearchValue(e.target.value)
+  })
+
+  useEffect(() => {
+    console.log('====================================');
+    console.log('searchValue >>', searchValue);
+    console.log('====================================');
+
+    try {
+      const { data } = useQuery(SEARCH_TASK, {
+        variables: {
+          title: searchValue
+        }
+      })
+
+      console.log('====================================');
+      console.log('data >>', data);
+      console.log('====================================');
+
+    } catch (error) {
+      
+    }
+  }, [searchValue])
+
   const fetchMoreTasks = useCallback(() => 
     fetchMore({
       variables: {
@@ -165,9 +201,13 @@ const Posts = () => {
       <Header />
 
       <AdminContainer>
-        <Link href="/staffonly/admin/add-task">
-          <AddTaskBtn>Add task</AddTaskBtn>
-        </Link>
+        <TaskListHeader>
+          <SearchTask type="text" value={searchValue} onChange={handleSearchChange} />
+          <Link href="/staffonly/admin/add-task">
+            <AddTaskBtn>Add task</AddTaskBtn>
+          </Link>
+        </TaskListHeader>
+        
         <TaskList>
           {
             tasks?.map(task => (
