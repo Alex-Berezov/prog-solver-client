@@ -10,6 +10,7 @@ import { GET_TASKS, SEARCH_TASK } from '../../../graphql/query/tasks'
 import Link from 'next/link.js'
 import Modal from '../../../components/Modal/Modal'
 import DeleteTaskModal from '../../../components/DeleteTaskModal/DeleteTaskModal'
+import SearchTask from '../../../components/SearchTask/SearchTask'
 
 const TaskList = styled.div`
   display: flex;
@@ -22,8 +23,23 @@ const TaskListHeader = styled.div`
   justify-content: space-between;
 `
 
-const SearchTask = styled.input`
+const SearchTaskWrapper =styled.div`
+  position: relative;
+`
 
+const SearchTaskToolTip = styled.div`
+  font-size: 13px;
+  visibility: visible;
+  width: max-contents;
+  background-color: lightgray;
+  color: red;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  bottom: 20px;
 `
 
 const Task = styled.div`
@@ -118,13 +134,12 @@ const Posts = () => {
   const [tasks, setTasks] = useState([])
   const [deleteModal, setDeleteModal] = useState(false)
   const [taskId, setTaskId] = useState('')
-  const [hasNextPage, setHasNextPage] = useState(true)
+  const [hasNextPage, setHasNextPage] = useState(false)
   const [after, setAfter] = useState()
-  const [searchValue, setSearchValue] = useState('')
+  const [searchError, setSearchError] = useState(false)
   
   const { error, loading, data, refetch, fetchMore } = useQuery(GET_TASKS, {
-    variables: { first, delay },
-    notifyOnNetworkStatusChange: true
+    variables: { first, delay }
   })
 
   useEffect(() => {
@@ -139,7 +154,7 @@ const Posts = () => {
   useEffect(() => {
     setAfter(data?.getAllTasks.pageInfo.endCursor)
     const newTasksList = data && JSON.parse(JSON.stringify(data.getAllTasks.edges))
-    if (!loading) return setTasks(newTasksList)
+    if (!loading) return setTasks(newTasksList || [])
   }, [data])
 
   const onClickDeleteTask = useCallback((id) => {
@@ -152,31 +167,6 @@ const Posts = () => {
     return <div>An error occurred</div>
   }
 
-  const handleSearchChange = useCallback((e) => {
-    setSearchValue(e.target.value)
-  })
-
-  useEffect(() => {
-    console.log('====================================');
-    console.log('searchValue >>', searchValue);
-    console.log('====================================');
-
-    try {
-      const { data } = useQuery(SEARCH_TASK, {
-        variables: {
-          title: searchValue
-        }
-      })
-
-      console.log('====================================');
-      console.log('data >>', data);
-      console.log('====================================');
-
-    } catch (error) {
-      
-    }
-  }, [searchValue])
-
   const fetchMoreTasks = useCallback(() => 
     fetchMore({
       variables: {
@@ -186,7 +176,7 @@ const Posts = () => {
       }
     })
     .then(data => {
-      setTasks(data?.data?.getAllTasks?.edges)
+      setTasks(data?.data?.getAllTasks?.edges || [])
       setHasNextPage(data?.data?.getAllTasks.pageInfo.hasNextPage)
       setAfter(data?.data?.getAllTasks.pageInfo.endCursor)
     })
@@ -202,7 +192,13 @@ const Posts = () => {
 
       <AdminContainer>
         <TaskListHeader>
-          <SearchTask type="text" value={searchValue} onChange={handleSearchChange} />
+          <SearchTaskWrapper>
+            {searchError && <SearchTaskToolTip>Minimum of 4 characters</SearchTaskToolTip>}
+            <SearchTask
+              setSearchError={setSearchError}
+              setTasks={setTasks}
+            />
+          </SearchTaskWrapper>
           <Link href="/staffonly/admin/add-task">
             <AddTaskBtn>Add task</AddTaskBtn>
           </Link>
@@ -210,32 +206,34 @@ const Posts = () => {
         
         <TaskList>
           {
-            tasks?.map(task => (
-              <Task key={task.node._id}>
-                <TaskHeader>
-                  <TaskTitle>{task.node.title}</TaskTitle>
-                  <TaskButtons>
-                    <Link
-                      href={`/staffonly/admin/update-task/${encodeURIComponent(task.node.taskSlug)}`}
-                      as={`/staffonly/admin/update-task/${task.node.taskSlug}`}
-                    >
-                      <TaskEditBtn>Edit</TaskEditBtn>
-                    </Link>
-                    <TaskDeleteBtn onClick={() => onClickDeleteTask(task.node._id)}>
-                      Delete
-                    </TaskDeleteBtn>
-                  </TaskButtons>
-                </TaskHeader>
-                <TaskInfo>
-                  <TaskInfoItem>Created: {task.node.created}</TaskInfoItem>
-                  <TaskInfoItem>Views: 42</TaskInfoItem>
-                </TaskInfo>
-              </Task>
-            ))
+            tasks?.length
+              ? tasks?.map(task => (
+                  <Task key={task.node._id}>
+                    <TaskHeader>
+                      <TaskTitle>{task.node.title}</TaskTitle>
+                      <TaskButtons>
+                        <Link
+                          href={`/staffonly/admin/update-task/${encodeURIComponent(task.node.taskSlug)}`}
+                          as={`/staffonly/admin/update-task/${task.node.taskSlug}`}
+                        >
+                          <TaskEditBtn>Edit</TaskEditBtn>
+                        </Link>
+                        <TaskDeleteBtn onClick={() => onClickDeleteTask(task.node._id)}>
+                          Delete
+                        </TaskDeleteBtn>
+                      </TaskButtons>
+                    </TaskHeader>
+                    <TaskInfo>
+                      <TaskInfoItem>Created: {task.node.created}</TaskInfoItem>
+                      <TaskInfoItem>Views: 42</TaskInfoItem>
+                    </TaskInfo>
+                  </Task>
+                ))
+              : <p>No results</p>
           }
         </TaskList>
         {
-          hasNextPage &&
+          tasks?.length < first || hasNextPage &&
             <LoadMoreButton onClick={fetchMoreTasks}>
               Load more
             </LoadMoreButton>
