@@ -22,6 +22,8 @@ export const GET_TASKS = gql`
               solution
             }
           }
+          imgUrl
+          imgAuthor
         }
       }
     }
