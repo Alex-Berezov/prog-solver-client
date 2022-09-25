@@ -9,14 +9,17 @@ export const Container = styled.main`
 export const H1 = styled.h1`
   margin: 0;
   font-weight: 500;
+  font-size: 28px;
 `
 
 export const H2 = styled.h2`
   margin: 0;
   font-weight: 500;
+  font-size: 24px;
 `
 
 export const H3 = styled.h3`
   margin: 0;
   font-weight: 500;
+  font-size: 18px;
 `

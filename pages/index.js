@@ -6,7 +6,8 @@ import Link from 'next/link'
 import { useQuery } from '@apollo/client'
 import Header from '../components/Header/Header'
 import { GET_TASKS } from '../graphql/query/tasks'
-import HomePageContainer from '../components/HomePageContainer/HomePageContainer'
+import PageContainer from '../components/PageContainer/PageContainer'
+import SearchTask from '../components/SearchTask/SearchTask'
 
 const TasksList = styled.div`
   display: flex;
@@ -19,6 +20,11 @@ const Task = styled.div`
   margin-bottom: 30px;
   border: 1px solid grey;
   cursor: pointer;
+
+  &:hover {
+    color: red;
+    border: 1px solid green;
+  }
 `
 
 const TaskImage = styled.img`
@@ -69,6 +75,26 @@ const LoadMoreButton = styled.button`
   margin: 20px auto;
   padding: 5px 10px;
   cursor: pointer;
+`
+
+const SearchTaskWrapper = styled.div`
+  position: relative;
+  margin-bottom: 30px;
+`
+
+const SearchTaskToolTip = styled.div`
+  font-size: 13px;
+  visibility: visible;
+  width: max-contents;
+  background-color: lightgray;
+  color: red;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  bottom: 20px;
 `
 
 
@@ -129,12 +155,23 @@ const Home = () => {
 
       <Header />
       
-      <HomePageContainer>
+      <PageContainer>
+        <SearchTaskWrapper>
+          {searchError && <SearchTaskToolTip>Minimum 4 characters</SearchTaskToolTip>}
+          <SearchTask
+            setSearchError={setSearchError}
+            setTasks={setTasks}
+          />
+        </SearchTaskWrapper>
         <TasksList>
           {
             tasks?.length
               ? tasks.map(task => (
-                <Link key={task.node._id} href="/">
+                <Link
+                  key={task.node._id}
+                  href={`/${encodeURIComponent(task.node.taskSlug)}`}
+                  as={`/${task.node.taskSlug}`}
+                >
                   <Task>
                     <TaskImage src={task.node.imgUrl} />
                     <TaskHeader>
@@ -159,7 +196,7 @@ const Home = () => {
               Load more
             </LoadMoreButton>
         }
-      </HomePageContainer>
+      </PageContainer>
 
     </Styled.Container>
   )

@@ -193,7 +193,7 @@ const Posts = () => {
       <AdminContainer>
         <TaskListHeader>
           <SearchTaskWrapper>
-            {searchError && <SearchTaskToolTip>Minimum of 4 characters</SearchTaskToolTip>}
+            {searchError && <SearchTaskToolTip>Minimum 4 characters</SearchTaskToolTip>}
             <SearchTask
               setSearchError={setSearchError}
               setTasks={setTasks}

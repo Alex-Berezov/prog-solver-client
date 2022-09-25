@@ -9,10 +9,11 @@ export const Container = styled.div`
   max-width: 1280px;
   width: 100%;
   margin: 0 auto;
+  display: flex;
 `
 
 export const NavbarItem = styled.div`
-  position: relative;
+  width: 15%;
 `
 
 export const Logo = styled.p`
@@ -22,4 +23,14 @@ export const Logo = styled.p`
   line-height: 21px;
   color: #3260A1;
   cursor: pointer;
+`
+
+export const AddsWrapper = styled.div`
+  width: 100%;
+`
+
+export const Adds = styled.div`
+  width: 85%;
+  padding-left: 30px;
+  text-align: center;
 `

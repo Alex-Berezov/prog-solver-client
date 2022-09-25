@@ -41,6 +41,8 @@ export const GET_TASK = gql`
           id solution
         }
       }
+      imgUrl
+      imgAuthor
     }
   }
 `
@@ -67,6 +69,8 @@ export const SEARCH_TASK = gql`
               solution
             }
           }
+          imgUrl
+          imgAuthor
         }
       }
     }

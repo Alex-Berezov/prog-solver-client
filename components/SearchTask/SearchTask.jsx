@@ -34,7 +34,7 @@ const SearchTask = ({ setSearchError, setTasks }) => {
       value={searchValue}
       onChange={handleSearchChange}
       onKeyDown={handleSearch}
-      placeholder="Type query and press Enter"
+      placeholder="Search by title"
     />
   )
 }
