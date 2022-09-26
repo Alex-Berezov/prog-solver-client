@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
 import styled from 'styled-components'
@@ -7,9 +7,12 @@ import Header from '../components/Header/Header'
 import PageContainer from '../components/PageContainer/PageContainer'
 import { useRouter } from 'next/router.js'
 import { useQuery } from '@apollo/client'
-import { GET_TASK } from '../graphql/query/tasks.js'
+import { GET_TASK, GET_TASKS } from '../graphql/query/tasks.js'
 import Image from 'next/image'
 import { H1 } from '../styles/Theme/commonStyles.js'
+import hljs from 'highlight.js'
+import { langList } from '../data/langList.js'
+import Tabs from '../components/Tabs/Tabs';
 
 const ImageWrapper = styled.div`
   display: flex;
@@ -38,9 +41,27 @@ const Task = () => {
     }
   })
 
-  console.log('====================================');
-  console.log('data?.getTask >>', data?.getTask);
-  console.log('====================================');
+  const [solutionsList, setSolutionsList] = useState([])
+  const { data: solutionsData } = useQuery(GET_TASKS, {
+    variables: {
+      taskSlug
+    }
+  })
+
+  useEffect(() => {
+    hljs.initHighlighting()
+  }, [])
+
+  useEffect(() => {
+    const newSolutionsList = data && JSON.parse(JSON.stringify(data?.getTask?.solutionsList))
+    newSolutionsList?.forEach(item => {
+      delete item.__typename
+      item.solutions.forEach(el => {
+        delete el.__typename
+      })
+    })
+    setSolutionsList(newSolutionsList)
+  }, [data])
 
   const title = data?.getTask?.title
   const description = data?.getTask?.text?.substring(0, 150).trim().replace(/\r?\n/g, ' ')
@@ -73,6 +94,17 @@ const Task = () => {
         </ImageWrapper>
 
         <TaskTitle>{data?.getTask?.title}</TaskTitle>
+
+        <pre>
+          <code class="language-plaintext">
+            {data?.getTask?.text}
+          </code>
+        </pre>
+
+        <Tabs
+          items={langList}
+          content={solutionsList}
+        />
       </PageContainer>
       
     </Styled.Container>

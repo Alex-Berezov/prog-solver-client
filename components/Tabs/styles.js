@@ -56,3 +56,15 @@ export const AddSolutionsFieldsTextarea = styled.textarea`
   min-height: 100px;
   resize: none;
 `
+
+
+//DisplaySolutions styles
+
+export const DisplaySolutionsWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`
+
+export const DisplaySolution = styled.div``
+
+export const DisplaySolutionTitle = styled(H3)``

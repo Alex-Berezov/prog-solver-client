@@ -1,6 +1,7 @@
 import React from 'react'
 import * as Styled from './styles.js'
 import AddSolutionsFields from './AddSolutionsFields'
+import DisplaySolutions from './DisplaySolutions';
 
 const TabContent = ({ lang, content, setSolutionsList, solutionsList }) => {
   return (
@@ -9,7 +10,10 @@ const TabContent = ({ lang, content, setSolutionsList, solutionsList }) => {
       <Styled.Content>
         {
           content
-            ? content
+            ? <DisplaySolutions
+              lang={lang}
+              content={content}
+            />
             : <AddSolutionsFields
                 lang={lang}
                 setSolutionsList={setSolutionsList}
