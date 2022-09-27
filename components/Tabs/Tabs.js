@@ -11,7 +11,7 @@ const Tabs = ({ items, solutionsList, setSolutionsList, content }) => {
     <div>
       <Styled.Tab>
         {
-          items?.map((item, i) => (
+          items?.map(item => (
             <Styled.Button
               key={item.id}
               id={item.id}

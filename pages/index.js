@@ -173,7 +173,7 @@ const Home = () => {
                   as={`/${task.node.taskSlug}`}
                 >
                   <Task>
-                    <TaskImage src={task.node.imgUrl} />
+                    <TaskImage src={`/static/images/${task.node.imgUrl}`} />
                     <TaskHeader>
                       <TaskTitle>{task.node.title}</TaskTitle>
                       <TaskLangWrapper>

@@ -12,7 +12,7 @@ import Image from 'next/image'
 import { H1 } from '../styles/Theme/commonStyles.js'
 import hljs from 'highlight.js'
 import { langList } from '../data/langList.js'
-import Tabs from '../components/Tabs/Tabs';
+import Tabs from '../components/Tabs/Tabs'
 
 const ImageWrapper = styled.div`
   display: flex;
@@ -80,7 +80,7 @@ const Task = () => {
       <PageContainer>
         <ImageWrapper>
           <Image
-            src={`/${data?.getTask?.imgUrl}`}
+            src={`/static/images/${data?.getTask?.imgUrl}`}
             alt={title}
             layout="fixed"
             width={640}

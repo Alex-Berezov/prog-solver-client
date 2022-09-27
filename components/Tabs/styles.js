@@ -30,9 +30,12 @@ export const TabContent = styled.div`
   padding: 6px 12px;
   border: 1px solid #ccc;
   border-top: none;
+  min-height: 500px;
 `
 
-export const Title = styled(H3)``
+export const Title = styled(H3)`
+  margin: 20px 0;
+`
 
 export const Content = styled.div``
 
