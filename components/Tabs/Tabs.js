@@ -5,7 +5,9 @@ import TabContent from './TabContent.js'
 const Tabs = ({ items, solutionsList, setSolutionsList, content }) => {
   const [ active, setActive ] = useState(0)
 
-  const openTab = e => setActive(+e.target.dataset.index)
+  const openTab = e => setActive(+e.target.id)
+
+  const lang = items?.filter(el => el.id === active)[0]?.lang
 
   return (
     <div>
@@ -26,9 +28,8 @@ const Tabs = ({ items, solutionsList, setSolutionsList, content }) => {
       </Styled.Tab>
       {
         items
-        && items[active]
         && <TabContent
-              {...items[active]}
+              lang={lang}
               content={content}
               solutionsList={solutionsList}
               setSolutionsList={setSolutionsList}

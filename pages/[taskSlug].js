@@ -11,7 +11,6 @@ import { GET_TASK, GET_TASKS } from '../graphql/query/tasks.js'
 import Image from 'next/image'
 import { H1 } from '../styles/Theme/commonStyles.js'
 import hljs from 'highlight.js'
-import { langList } from '../data/langList.js'
 import Tabs from '../components/Tabs/Tabs'
 
 const ImageWrapper = styled.div`
@@ -35,25 +34,25 @@ const TaskTitle = styled(H1)`
 const Task = () => {
   const router = useRouter()
   const taskSlug = router?.asPath.substring(1)
-  const { loading, data } = useQuery(GET_TASK, {
+  const { data } = useQuery(GET_TASK, {
     variables: {
       taskSlug
     }
   })
 
   const [solutionsList, setSolutionsList] = useState([])
-  const { data: solutionsData } = useQuery(GET_TASKS, {
-    variables: {
-      taskSlug
-    }
-  })
+  // const { data: solutionsData } = useQuery(GET_TASKS, {
+  //   variables: {
+  //     taskSlug
+  //   }
+  // })
 
   useEffect(() => {
     hljs.initHighlighting()
   }, [])
 
   useEffect(() => {
-    const newSolutionsList = data && JSON.parse(JSON.stringify(data?.getTask?.solutionsList))
+    const newSolutionsList = data && JSON.parse(JSON.stringify(data?.getTask?.solutionsList || []))
     newSolutionsList?.forEach(item => {
       delete item.__typename
       item.solutions.forEach(el => {
@@ -65,6 +64,12 @@ const Task = () => {
 
   const title = data?.getTask?.title
   const description = data?.getTask?.text?.substring(0, 150).trim().replace(/\r?\n/g, ' ')
+
+  const langList = solutionsList?.map((item, i) => {
+    if (item.solutions[0].solution !== '') {
+      return { id: i, lang: item.lang }
+    }
+  }).filter(item => item !== undefined)
 
   return (
     <Styled.Container>

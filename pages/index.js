@@ -46,25 +46,6 @@ const TaskTitle = styled.h3`
   margin: 0;
 `
 
-const TaskLangWrapper = styled.div`
-  display: flex;
-  margin-top: auto;
-`
-
-const TaskLang = styled.div`
-  padding: 3px 5px;
-  border: none;
-  border-radius: 5px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: lightpink;
-  color: black;
-  font-weight: 300;
-  font-size: 12px;
-  margin-right: 5px;
-`
-
 const LoadMoreButton = styled.button`
   background: yellow;
   border: 1px solid yellow;
@@ -176,13 +157,6 @@ const Home = () => {
                     <TaskImage src={`/static/images/${task.node.imgUrl}`} />
                     <TaskHeader>
                       <TaskTitle>{task.node.title}</TaskTitle>
-                      <TaskLangWrapper>
-                        {
-                          task.node.solutionsList.map(solution => (
-                            <TaskLang>{solution.lang}</TaskLang>
-                          ))
-                        }
-                      </TaskLangWrapper>
                     </TaskHeader>
                   </Task>
                 </Link>

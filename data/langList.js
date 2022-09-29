@@ -43,7 +43,7 @@ export const langList= [
   {id: 41, lang: 'λ Calculus'},
   {id: 42, lang: 'Lean'},
   {id: 43, lang: 'Lua'},
-  {id: 44, lang: 'NASM'},
+  // {id: 44, lang: 'NASM'},
   {id: 45, lang: 'Nim'},
   {id: 46, lang: 'OCaml'},
   {id: 47, lang: 'Pascal'},

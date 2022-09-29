@@ -10,6 +10,8 @@ import { langList } from '../../../data/langList'
 import { useRouter } from 'next/router.js'
 import { useMutation } from '@apollo/client'
 import { CREATE_TASK } from '../../../graphql/mutations/tasks'
+import { getRandomInt } from '../../../utils/index'
+import { imgList } from '../../../public/static/images/01ImgList'
 
 const FormWrapper = styled.div`
   display: flex;
@@ -84,8 +86,8 @@ const FormBtn = styled.button`
 const AddTask = () => {
   useWithCredentials()
 
-  const imgUrl = 'https://images.unsplash.com/photo-1462804993656-fac4ff489837?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80'
-  const imgAuthor = 'https://unsplash.com/photos/FtBS0p23fcc'
+  const [imgUrl, setImgUrl] = useState('')
+  const [imgAuthor, setImgAuthor] = useState('')
 
   const [newTask] = useMutation(CREATE_TASK)
   const [title, setTitle] = useState('')
@@ -110,6 +112,11 @@ const AddTask = () => {
     ))
 
     setSolutionsList(solutionsArr)
+
+    const imgId = getRandomInt(0, 300)
+    const selectedImg = imgList.filter(el => el.id === imgId)    
+    setImgUrl(selectedImg[0].imgUrl)
+    setImgAuthor(selectedImg[0].imgAuthor)
   }, [])
 
   const addTask = useCallback(async () => {
