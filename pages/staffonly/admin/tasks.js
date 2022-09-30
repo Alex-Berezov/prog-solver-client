@@ -207,7 +207,7 @@ const Posts = () => {
         <TaskList>
           {
             tasks?.length
-              ? tasks?.map(task => (
+              ? tasks?.reverse().map(task => (
                   <Task key={task.node._id}>
                     <TaskHeader>
                       <TaskTitle>{task.node.title}</TaskTitle>

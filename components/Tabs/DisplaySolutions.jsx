@@ -18,7 +18,7 @@ const DisplaySolutions = ({ lang, content }) => {
             <Styled.DisplaySolution key={elem.id}>
               <Styled.DisplaySolutionTitle>Solution #{i + 1}</Styled.DisplaySolutionTitle>
               <pre>
-                <code className={`language-${lang.toLowerCase()}`}>
+                <code className={`language-${lang.toLowerCase().replace(/-/, '')}`}>
                   {elem.solution}
                 </code>
               </pre>
