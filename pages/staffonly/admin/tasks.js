@@ -125,7 +125,7 @@ const LoadMoreButton = styled.button`
   cursor: pointer;
 `
 
-const first = 6
+const first = 18
 const delay = true
 
 const Posts = () => {
@@ -207,7 +207,7 @@ const Posts = () => {
         <TaskList>
           {
             tasks?.length
-              ? tasks?.reverse().map(task => (
+              ? tasks?.map(task => (
                   <Task key={task.node._id}>
                     <TaskHeader>
                       <TaskTitle>{task.node.title}</TaskTitle>

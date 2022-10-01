@@ -82,7 +82,7 @@ const SearchTaskToolTip = styled.div`
 const title = "ProgSolver - solving programming tasks"
 const description = "Ready-made solutions to programming tasks in all existing languages."
 
-const first = 6
+const first = 18
 const delay = true
 
 const Home = () => {
