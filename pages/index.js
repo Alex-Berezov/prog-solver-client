@@ -8,6 +8,28 @@ import Header from '../components/Header/Header'
 import { GET_TASKS } from '../graphql/query/tasks'
 import PageContainer from '../components/PageContainer/PageContainer'
 import SearchTask from '../components/SearchTask/SearchTask'
+import { H1, H3, Text } from '../styles/Theme/commonStyles.js'
+import { scRespondTo } from '../utils/index'
+import Image from 'next/image'
+
+import gorizontalAdd from '../public/static/728x90.png'
+
+const MainTitle = styled(H1)`
+  font-size: 40px;
+  text-align: center;
+
+  ${scRespondTo.sm} {
+    font-size: 60px;
+  }
+
+  ${scRespondTo.preMd} {
+    font-size: 100px;
+  }
+`
+
+const MainText = styled(Text)`
+  margin: 35px 0 75px 0;
+`
 
 const TasksList = styled.div`
   display: flex;
@@ -16,20 +38,27 @@ const TasksList = styled.div`
 `
 
 const Task = styled.div`
-  width: 32%;
+  width: 100%;
   margin-bottom: 30px;
-  border: 1px solid grey;
+  border: 1px solid transparent;
   cursor: pointer;
 
   &:hover {
-    color: red;
-    border: 1px solid green;
+    border: 1px solid grey;
+  }
+
+  ${scRespondTo.sm} {
+    width: 49%;
+  }
+
+  ${scRespondTo.preMd} {
+    width: 32%;
   }
 `
 
 const TaskImage = styled.img`
   width: 100%;
-  height: auto;
+  height: 70%;
 `
 
 const TaskHeader = styled.div`
@@ -38,24 +67,31 @@ const TaskHeader = styled.div`
   justify-content: space-between;
   background: white;
   padding: 10px;
-  height: 100px;
+  height: auto;
 `
 
-const TaskTitle = styled.h3`
-  font-weight: 400;
+const TaskTitle = styled(H3)`
   margin: 0;
 `
 
 const LoadMoreButton = styled.button`
-  background: yellow;
-  border: 1px solid yellow;
-  border-radius: 5px;
+  width: 100%;
+  background: #F7CBD7;
+  border: 1px solid #F7CBD7;
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 20px auto;
-  padding: 5px 10px;
+  padding: 15px;
   cursor: pointer;
+
+  font-family: 'Cousine';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 18px;
+  letter-spacing: 0.21em;
+  color: #000000;
 `
 
 const SearchTaskWrapper = styled.div`
@@ -76,6 +112,14 @@ const SearchTaskToolTip = styled.div`
   z-index: 1;
   left: 0;
   bottom: 20px;
+`
+
+const Adds = styled.div`
+  display: block;
+
+  ${scRespondTo.preSm} {
+    display: none;
+  }
 `
 
 
@@ -137,6 +181,19 @@ const Home = () => {
       <Header />
       
       <PageContainer>
+        <Adds>
+          <Image src={gorizontalAdd} alt="gorizontalAdd" />
+        </Adds>
+
+        <MainTitle>
+          There are no unsolvable tasks
+        </MainTitle>
+
+        <MainText>
+          The site presents solutions to programming tasks. We don't want to contribute to cheating. 
+          Therefore, before you look at the solution of the tasks, make sure that you have tried all possible options to solve it yourself.
+        </MainText>
+
         <SearchTaskWrapper>
           {searchError && <SearchTaskToolTip>Minimum 4 characters</SearchTaskToolTip>}
           <SearchTask

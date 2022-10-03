@@ -3,6 +3,8 @@ import * as Styled from './styles.js'
 import { useQuery } from '@apollo/client'
 import { SEARCH_TASK } from '../../graphql/query/tasks'
 
+import magnifier from '../../public/static/magnifier.svg'
+
 const SearchTask = ({ setSearchError, setTasks }) => {
   const [searchValue, setSearchValue] = useState('')
 
@@ -29,13 +31,16 @@ const SearchTask = ({ setSearchError, setTasks }) => {
   })
 
   return (
-    <Styled.SearchTask
-      type="text"
-      value={searchValue}
-      onChange={handleSearchChange}
-      onKeyDown={handleSearch}
-      placeholder="Search by title"
-    />
+    <Styled.SearchTask>
+      <Styled.SearchTaskImg width={30} height={30} src={magnifier} alt="magnifier" />
+      <Styled.SearchTaskInput
+        type="text"
+        value={searchValue}
+        onChange={handleSearchChange}
+        onKeyDown={handleSearch}
+        placeholder="Search by title"
+      />
+    </Styled.SearchTask>
   )
 }
 

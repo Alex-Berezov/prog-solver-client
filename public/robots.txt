@@ -1,0 +1,13 @@
+User-agent: *
+Disallow: /
+Disallow: /staffonly/*
+
+User-agent: Googlebot
+Disallow: /
+Disallow: /staffonly/*
+
+User-Agent: Yandex
+Disallow: /
+Disallow: /staffonly/*
+
+Sitemap: https://prog-solver/sitemap.xml

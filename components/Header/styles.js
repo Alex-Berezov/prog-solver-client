@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { scRespondTo } from '../../utils/index'
 
 export const Header = styled.header`
   background: #FEFEFE;
@@ -13,7 +14,11 @@ export const Container = styled.div`
 `
 
 export const NavbarItem = styled.div`
-  width: 15%;
+  width: 100%;
+
+  ${scRespondTo.sm} {
+    width: 15%;
+  }
 `
 
 export const Logo = styled.p`
@@ -30,7 +35,12 @@ export const AddsWrapper = styled.div`
 `
 
 export const Adds = styled.div`
-  width: 85%;
-  padding-left: 30px;
-  text-align: center;
+  display: none;
+
+  ${scRespondTo.sm} {
+    display: block;
+    width: 85%;
+    padding-left: 30px;
+    text-align: center;
+  }
 `

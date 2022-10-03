@@ -1,0 +1,66 @@
+@font-face {
+    font-family: 'Determination Mono Web';
+    src: url('DeterminationMonoWeb.eot');
+    src: url('DeterminationMonoWeb.eot?#iefix') format('embedded-opentype'),
+        url('DeterminationMonoWeb.woff2') format('woff2'),
+        url('DeterminationMonoWeb.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Determination Mono Web';
+    src: url('DeterminationMonoWeb.eot');
+    src: url('DeterminationMonoWeb.eot?#iefix') format('embedded-opentype'),
+        url('DeterminationMonoWeb.woff2') format('woff2'),
+        url('DeterminationMonoWeb.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Cousine';
+    src: url('Cousine-Italic.eot');
+    src: url('Cousine-Italic.eot?#iefix') format('embedded-opentype'),
+        url('Cousine-Italic.woff2') format('woff2'),
+        url('Cousine-Italic.woff') format('woff');
+    font-weight: normal;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Cousine';
+    src: url('Cousine-Bold.eot');
+    src: url('Cousine-Bold.eot?#iefix') format('embedded-opentype'),
+        url('Cousine-Bold.woff2') format('woff2'),
+        url('Cousine-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Cousine';
+    src: url('Cousine-BoldItalic.eot');
+    src: url('Cousine-BoldItalic.eot?#iefix') format('embedded-opentype'),
+        url('Cousine-BoldItalic.woff2') format('woff2'),
+        url('Cousine-BoldItalic.woff') format('woff');
+    font-weight: bold;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Cousine';
+    src: url('Cousine-Regular.eot');
+    src: url('Cousine-Regular.eot?#iefix') format('embedded-opentype'),
+        url('Cousine-Regular.woff2') format('woff2'),
+        url('Cousine-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
