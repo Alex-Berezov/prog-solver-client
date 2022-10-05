@@ -1,10 +1,10 @@
 import styled from 'styled-components'
-import { H3 } from '../../styles/Theme/commonStyles.js'
+import { H3, Text } from '../../styles/Theme/commonStyles.js'
 
 export const Tab = styled.div`
   overflow: hidden;
-  border: 1px solid #ccc;
-  background-color: #f1f1f1;
+  border: 1px solid #6cb2f2;
+  background-color: white;
 `
 
 export const Button = styled.button`
@@ -18,17 +18,18 @@ export const Button = styled.button`
   font-size: 17px;
 
   &:hover {
-    background-color: #ddd;
+    background-color: #1f87e7;
   }
 
   &.active {
-    background-color: #ccc;
+    color: #1f87e7;
+    text-decoration: underline;
   }
 `
 
 export const TabContent = styled.div`
   padding: 6px 12px;
-  border: 1px solid #ccc;
+  border: 1px solid #6cb2f2;
   border-top: none;
   min-height: 500px;
 `
@@ -70,4 +71,4 @@ export const DisplaySolutionsWrapper = styled.div`
 
 export const DisplaySolution = styled.div``
 
-export const DisplaySolutionTitle = styled(H3)``
+export const DisplaySolutionTitle = styled(Text)``

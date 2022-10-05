@@ -26,7 +26,7 @@ export const Logo = styled.p`
   font-weight: 500;
   font-size: 18px;
   line-height: 21px;
-  color: #3260A1;
+  color: #1f87e7;
   cursor: pointer;
 `
 

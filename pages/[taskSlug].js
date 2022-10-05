@@ -8,9 +8,12 @@ import { useRouter } from 'next/router.js'
 import { useQuery } from '@apollo/client'
 import { GET_TASK } from '../graphql/query/tasks.js'
 import Image from 'next/image'
-import { H1 } from '../styles/Theme/commonStyles.js'
+import { H1, H2 } from '../styles/Theme/commonStyles.js'
 import hljs from 'highlight.js'
 import Tabs from '../components/Tabs/Tabs'
+import { scRespondTo } from '../utils/index'
+
+import gorizontalAdd from '../public/static/728x90.png'
 
 const ImageWrapper = styled.div`
   display: flex;
@@ -28,6 +31,26 @@ const ImageText = styled.p`
 
 const TaskTitle = styled(H1)`
   text-align: center;
+  font-weight: 500;
+  font-size: 40px;
+  line-height: 45px;
+  letter-spacing: 0.21em;
+  color: #000000;
+  margin: 30px 0;
+`
+
+const SubTitle = styled(H2)`
+  text-align: center;
+  margin: 30px 0;
+` 
+
+const Adds = styled.div`
+  display: block;
+  margin-bottom: 30px;
+
+  ${scRespondTo.preSm} {
+    display: none;
+  }
 `
 
 const Task = () => {
@@ -77,11 +100,14 @@ const Task = () => {
       <Header />
 
       <PageContainer>
+        <Adds>
+          <Image src={gorizontalAdd} alt="gorizontalAdd" />
+        </Adds>
+
         <ImageWrapper>
           <Image
             src={`/static/images/${data?.getTask?.imgUrl}`}
             alt={title}
-            layout="fixed"
             width={640}
             height={360}
           />
@@ -99,6 +125,8 @@ const Task = () => {
             {data?.getTask?.text}
           </code>
         </pre>
+
+        <SubTitle>Solutions</SubTitle>
 
         <Tabs
           items={langList}

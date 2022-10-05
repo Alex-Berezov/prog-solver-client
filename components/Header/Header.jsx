@@ -11,7 +11,7 @@ const Header = () => {
       <Styled.Container>
         <Styled.NavbarItem>
           <Link href="/">
-            <Styled.Logo>Prog Solver</Styled.Logo>
+            <Styled.Logo>{`{ Prog Solver }`}</Styled.Logo>
           </Link>
         </Styled.NavbarItem>
         <Styled.Adds>
