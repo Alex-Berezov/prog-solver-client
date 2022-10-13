@@ -9,7 +9,7 @@ const Sitemap = () => {
 }
 
 export const getServerSideProps = async ({ res }) => {
-  const BASE_URL = 'http://localhost:3000'
+  const BASE_URL = 'https://prog-solver'
 
   const { data } = await client.query({query: GET_TASKS, variables: { first, delay }})
 

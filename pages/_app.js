@@ -4,7 +4,7 @@ import { theme } from '../styles/Theme/commonTheme.js'
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
 
 export const client = new ApolloClient({
-  uri: 'http://localhost/:5000/graphql',
+  uri: '/graphql',
   cache: new InMemoryCache(),
 })
 
