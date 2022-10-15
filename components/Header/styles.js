@@ -24,7 +24,7 @@ export const NavbarItem = styled.div`
 export const Logo = styled.p`
   font-style: normal;
   font-weight: 500;
-  font-size: 18px;
+  font-size: 1.2em;
   line-height: 21px;
   color: #1f87e7;
   cursor: pointer;

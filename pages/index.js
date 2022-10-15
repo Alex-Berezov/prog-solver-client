@@ -10,9 +10,6 @@ import PageContainer from '../components/PageContainer/PageContainer'
 import SearchTask from '../components/SearchTask/SearchTask'
 import { H1, H3, Text } from '../styles/Theme/commonStyles.js'
 import { scRespondTo } from '../utils/index'
-import Image from 'next/image'
-
-import gorizontalAdd from '../public/static/728x90.png'
 
 const MainTitle = styled(H1)`
   font-size: 40px;
@@ -181,9 +178,7 @@ const Home = () => {
       <Header />
       
       <PageContainer>
-        <Adds>
-          <Image src={gorizontalAdd} alt="gorizontalAdd" />
-        </Adds>
+        <Adds></Adds>
 
         <MainTitle>
           There are no unsolvable tasks

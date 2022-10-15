@@ -13,8 +13,6 @@ import hljs from 'highlight.js'
 import Tabs from '../components/Tabs/Tabs'
 import { scRespondTo } from '../utils/index'
 
-import gorizontalAdd from '../public/static/728x90.png'
-
 const ImageWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -100,9 +98,7 @@ const Task = () => {
       <Header />
 
       <PageContainer>
-        <Adds>
-          <Image src={gorizontalAdd} alt="gorizontalAdd" />
-        </Adds>
+        <Adds></Adds>
 
         <ImageWrapper>
           <Image
