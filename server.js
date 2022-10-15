@@ -1,5 +1,5 @@
-import express from 'express'
-import next from 'next'
+const express = require('express');
+const next = require('next');
 
 const port = 3000;
 const app = next({ dev: false });
