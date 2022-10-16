@@ -10,6 +10,9 @@ import PageContainer from '../components/PageContainer/PageContainer'
 import SearchTask from '../components/SearchTask/SearchTask'
 import { H1, H3, Text } from '../styles/Theme/commonStyles.js'
 import { scRespondTo } from '../utils/index'
+import Image from 'next/image'
+
+import defaultImg from '../public/static/images/abdelrahman-sobhy-8LBLGdiKcu0-unsplash.jpg'
 
 const MainTitle = styled(H1)`
   font-size: 40px;
@@ -206,7 +209,15 @@ const Home = () => {
                   as={`/${task.node.taskSlug}`}
                 >
                   <Task>
-                    <TaskImage src={`/static/images/${task.node.imgUrl}`} />
+                    <TaskImage>
+                      <Image
+                        src={`/public/static/images/${task.node.imgUrl}`}
+                        alt={task.node.title}
+                        layout='fill'
+                        blurDataURL={defaultImg}
+                        placeholder="blur"
+                      />
+                    </TaskImage>
                     <TaskHeader>
                       <TaskTitle>{task.node.title}</TaskTitle>
                     </TaskHeader>
