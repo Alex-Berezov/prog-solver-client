@@ -3,4 +3,5 @@ module.exports = {
   images: {
     domains: ['localhost', 'prog-solver.online'],
   },
+  optimizeFonts: true,
 }

@@ -203,7 +203,7 @@ const Home = () => {
         <TasksList>
           {
             tasks?.length
-              ? tasks?.map(task => {
+              ? tasks?.map((task, i) => {
                 return <Link
                   key={task.node._id}
                   href={`/${encodeURIComponent(task.node.taskSlug)}`}
@@ -217,6 +217,7 @@ const Home = () => {
                         layout='fill'
                         blurDataURL={defaultImg}
                         placeholder="blur"
+                        priority={i === 0 || 1 || 2 && "true"}
                       />
                     </TaskImage>
                     <TaskHeader>

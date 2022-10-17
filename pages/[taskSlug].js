@@ -106,6 +106,7 @@ const Task = () => {
             alt={title}
             width={640}
             height={360}
+            priority
           />
           <ImageText>
             Photo from
