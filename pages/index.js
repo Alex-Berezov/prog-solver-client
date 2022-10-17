@@ -131,16 +131,6 @@ const first = 18
 const delay = true
 
 const Home = () => {
-  const [baseURL, setBaseURL] = useState('http://localhost:3000')
-
-  useEffect(() => {
-    process.env.NODE_ENV === 'production'
-      ? setBaseURL('https://prog-solver.online')
-      : setBaseURL('http://localhost:3000')
-  }, [])
-
-  
-
   const [tasks, setTasks] = useState([])
   const [hasNextPage, setHasNextPage] = useState(false)
   const [after, setAfter] = useState()
