@@ -56,9 +56,10 @@ const Task = styled.div`
   }
 `
 
-const TaskImage = styled.img`
+const TaskImage = styled.div`
+  position: relative;
   width: 100%;
-  height: 70%;
+  height: 15em;
 `
 
 const TaskHeader = styled.div`
@@ -130,6 +131,16 @@ const first = 18
 const delay = true
 
 const Home = () => {
+  const [baseURL, setBaseURL] = useState('http://localhost:3000')
+
+  useEffect(() => {
+    process.env.NODE_ENV === 'production'
+      ? setBaseURL('https://prog-solver.online')
+      : setBaseURL('http://localhost:3000')
+  }, [])
+
+  
+
   const [tasks, setTasks] = useState([])
   const [hasNextPage, setHasNextPage] = useState(false)
   const [after, setAfter] = useState()
@@ -202,8 +213,8 @@ const Home = () => {
         <TasksList>
           {
             tasks?.length
-              ? tasks.map(task => (
-                <Link
+              ? tasks?.map(task => {
+                return <Link
                   key={task.node._id}
                   href={`/${encodeURIComponent(task.node.taskSlug)}`}
                   as={`/${task.node.taskSlug}`}
@@ -211,7 +222,7 @@ const Home = () => {
                   <Task>
                     <TaskImage>
                       <Image
-                        src={`/public/static/images/${task.node.imgUrl}`}
+                        src={`/static/images/${task.node.imgUrl}`}
                         alt={task.node.title}
                         layout='fill'
                         blurDataURL={defaultImg}
@@ -223,7 +234,7 @@ const Home = () => {
                     </TaskHeader>
                   </Task>
                 </Link>
-              ))
+              })
               : <p>No results</p>
           }
         </TasksList>
