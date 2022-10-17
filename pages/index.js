@@ -217,7 +217,6 @@ const Home = () => {
                         layout='fill'
                         blurDataURL={defaultImg}
                         placeholder="blur"
-                        priority={i === 0 || 1 || 2 && "true"}
                       />
                     </TaskImage>
                     <TaskHeader>
