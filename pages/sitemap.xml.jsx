@@ -9,7 +9,7 @@ const Sitemap = () => {
 }
 
 export const getServerSideProps = async ({ res }) => {
-  const BASE_URL = 'https://progsolver.online'
+  const BASE_URL = 'https://progsolver.com'
 
   const { data } = await client.query({query: GET_TASKS, variables: { first, delay }})
 
