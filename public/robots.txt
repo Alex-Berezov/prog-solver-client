@@ -6,4 +6,4 @@ User-agent: Googlebot
 Allow: /
 Disallow: /staffonly/*
 
-Sitemap: https://prog-solver/sitemap.xml
+Sitemap: https://progsolver.com/sitemap.xml
