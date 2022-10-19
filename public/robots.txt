@@ -1,13 +1,9 @@
 User-agent: *
-Disallow: /
+Allow: /
 Disallow: /staffonly/*
 
 User-agent: Googlebot
-Disallow: /
-Disallow: /staffonly/*
-
-User-Agent: Yandex
-Disallow: /
+Allow: /
 Disallow: /staffonly/*
 
 Sitemap: https://prog-solver/sitemap.xml
