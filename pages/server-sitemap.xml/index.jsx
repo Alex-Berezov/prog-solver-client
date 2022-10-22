@@ -7,10 +7,6 @@ export const getServerSideProps = async (ctx) => {
   const delay = true
   const BaseURL = process.env.PROD_HOST
 
-  console.log('====================================');
-  console.log('BaseURL >>', BaseURL);
-  console.log('====================================');
-
   const { data } = await client.query({query: GET_TASKS, variables: { first, delay }})
 
   const fields = data?.getAllTasks?.edges?.map(task => ({
