@@ -32,7 +32,11 @@ yarn-error.log*
 next-env.d.ts
 
 # local env files
-# .env*.local
-# .env
+.env*.local
+.env
 
 nginx-setup.js
+
+#sitemap & robots
+/public/robots.txt
+/public/sitemap*

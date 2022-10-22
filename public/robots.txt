@@ -1,9 +1,11 @@
+# *
 User-agent: *
 Allow: /
+Disallow: /staffonly
 Disallow: /staffonly/*
 
-User-agent: Googlebot
-Allow: /
-Disallow: /staffonly/*
+# Host
+Host: http://localhost:3000
 
-Sitemap: https://progsolver.com/sitemap.xml
+# Sitemaps
+Sitemap: http://localhost:3000/sitemap.xml
