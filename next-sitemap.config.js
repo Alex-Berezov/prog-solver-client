@@ -1,4 +1,4 @@
-const siteUrl = process.env.NODE_ENV === 'production' ? process.env.PROD_HOST : process.env.HOST
+const siteUrl = process.env.PROD_HOST
 
 module.exports = {
   siteUrl,

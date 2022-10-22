@@ -2,9 +2,6 @@ import { getServerSideSitemap } from 'next-sitemap'
 import { GET_TASKS } from '../../graphql/query/tasks'
 import { client } from '../_app'
 
-const first = 20000
-const delay = true
-
 export const getServerSideProps = async (ctx) => {
   const BaseURL = process.env.NODE_ENV === 'production' ? process.env.PROD_HOST : process.env.HOST
 
