@@ -2,7 +2,7 @@ const siteUrl = process.env.NODE_ENV === 'production' ? process.env.PROD_HOST : 
 
 module.exports = {
   siteUrl,
-  exclude: ['/staffonly/*'],
+  exclude: ['/staffonly/*', '/server-sitemap.xml'],
   generateRobotsTxt: true,
   robotsTxtOptions: {
     policies: [
