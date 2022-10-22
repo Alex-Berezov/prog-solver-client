@@ -52,18 +52,23 @@ const Adds = styled.div`
 `
 
 const Task = () => {
+  const [solutionsList, setSolutionsList] = useState([])
   const router = useRouter()
   const taskSlug = router?.asPath.substring(1)
-  const { data } = useQuery(GET_TASK, {
+  const { data, error } = useQuery(GET_TASK, {
     variables: {
       taskSlug
     }
   })
 
-  const [solutionsList, setSolutionsList] = useState([])
+  // if (data && !data.getTask) return router.push('/404')
+
+  console.log('====================================');
+  console.log('error >>', error);
+  console.log('====================================');
 
   useEffect(() => {
-    hljs.initHighlighting()
+    hljs.highlightAll()
   }, [])
 
   useEffect(() => {
