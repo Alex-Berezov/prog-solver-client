@@ -3,7 +3,13 @@ import { GET_TASKS } from '../../graphql/query/tasks'
 import { client } from '../_app'
 
 export const getServerSideProps = async (ctx) => {
-  const BaseURL = process.env.NODE_ENV === 'production' ? process.env.PROD_HOST : process.env.HOST
+  const first = 20000
+  const delay = true
+  const BaseURL = process.env.PROD_HOST
+
+  console.log('====================================');
+  console.log('BaseURL >>', BaseURL);
+  console.log('====================================');
 
   const { data } = await client.query({query: GET_TASKS, variables: { first, delay }})
 
