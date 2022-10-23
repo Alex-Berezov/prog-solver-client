@@ -16,7 +16,11 @@ const ContentWrapper = styled.div`
   align-items: center;
 `
 
-const LinkText = styled(H1)`
+const ErrorTitle = styled(H1)``
+
+const LinkText = styled.a`
+  margin-top: 30px;
+  font-size: 20px;
   color: skyblue;
   text-decoration: underline;
   cursor: pointer;
@@ -25,7 +29,7 @@ const LinkText = styled(H1)`
 export default function FourOhFour() {
   return <Root>
     <ContentWrapper>
-      <h1>404 - Page Not Found</h1>
+      <ErrorTitle>404 - Page Not Found</ErrorTitle>
       <Link href="/">
         <LinkText>
           Go back Home page
