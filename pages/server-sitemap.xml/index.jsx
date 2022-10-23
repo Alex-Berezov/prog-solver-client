@@ -11,7 +11,6 @@ export const getServerSideProps = async (ctx) => {
 
   const fields = data?.getAllTasks?.edges?.map(task => ({
     loc: `${BaseURL}/${task.node.taskSlug}`,
-    lastmod: new Date().toISOString(),
     priority: 1
   }))
 
