@@ -6,12 +6,13 @@ import Header from '../components/Header/Header'
 import PageContainer from '../components/PageContainer/PageContainer'
 import { useRouter } from 'next/router.js'
 import { useQuery } from '@apollo/client'
-import { GET_TASK } from '../graphql/query/tasks.js'
+import { GET_TASK, GET_TASKS } from '../graphql/query/tasks.js'
 import Image from 'next/image'
 import { H1, H2 } from '../styles/Theme/commonStyles.js'
 import hljs from 'highlight.js'
 import Tabs from '../components/Tabs/Tabs'
 import { scRespondTo } from '../utils/index'
+import { client } from './_app.js'
 
 const ImageWrapper = styled.div`
   display: flex;
@@ -55,17 +56,9 @@ const Task = () => {
   const [solutionsList, setSolutionsList] = useState([])
   const router = useRouter()
   const taskSlug = router?.asPath.substring(1)
-  const { data, error } = useQuery(GET_TASK, {
-    variables: {
-      taskSlug
-    }
+  const { data } = useQuery(GET_TASK, {
+    variables: { taskSlug }
   })
-
-  // if (data && !data.getTask) return router.push('/404')
-
-  console.log('====================================');
-  console.log('error >>', error);
-  console.log('====================================');
 
   useEffect(() => {
     hljs.highlightAll()
@@ -141,3 +134,25 @@ const Task = () => {
 }
 
 export default Task
+
+export async function getStaticPaths() {
+  const first = 20000
+  const delay = true
+  const { data } = await client.query({query: GET_TASKS, variables: { first, delay }})
+
+  const allSlugs = data?.getAllTasks?.edges?.map(task => {
+    return task.node.taskSlug
+  })
+
+  return {
+    paths: allSlugs?.map(taskSlug => `/${taskSlug}`) || [],
+    fallback: false
+  };
+}
+
+export async function getStaticProps({ params }) {
+  const { slug: taskSlug } = params
+  const task = await client.query({query: GET_TASK, variables: { taskSlug }})
+
+  return { props: task };
+}
