@@ -134,25 +134,3 @@ const Task = () => {
 }
 
 export default Task
-
-export async function getStaticPaths() {
-  const first = 20000
-  const delay = true
-  const { data } = await client.query({query: GET_TASKS, variables: { first, delay }})
-
-  const allSlugs = data?.getAllTasks?.edges?.map(task => {
-    return task.node.taskSlug
-  })
-
-  return {
-    paths: allSlugs?.map(taskSlug => `/${taskSlug}`) || [],
-    fallback: false
-  };
-}
-
-export async function getStaticProps({ params }) {
-  const { slug: taskSlug } = params
-  const task = await client.query({query: GET_TASK, variables: { taskSlug }})
-
-  return { props: task };
-}
