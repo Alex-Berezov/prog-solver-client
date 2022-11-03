@@ -53,11 +53,11 @@ const Adds = styled.div`
   }
 `
 
-const Task = (taskData) => {
+const Task = ({ taskData }) => {
 
-  // console.log('====================================');
-  // console.log('taskData >>', taskData);
-  // console.log('====================================');
+  console.log('====================================');
+  console.log('taskData >>', taskData);
+  console.log('====================================');
 
   const [solutionsList, setSolutionsList] = useState([])
   // const router = useRouter()
@@ -156,8 +156,8 @@ export async function getStaticProps({ params }) {
 
   return { 
     props: {
-      taskData,
-      revalidate: 10,
-    }
+      taskData
+    },
+    revalidate: 10,
   }
 }
