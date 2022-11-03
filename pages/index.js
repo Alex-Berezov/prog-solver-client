@@ -177,6 +177,7 @@ const Home = () => {
         <meta name="description" content={description} />
         <meta property="og:title" content={title} key="title" />
         <meta property="og:description" content={description} key="description" />
+        <meta name="google-site-verification" content="lhi7QMw2TjULX_yhm8j_N86X0MiL7chbOD4HvTciM_U" />
       </Head>
 
       <Header />
