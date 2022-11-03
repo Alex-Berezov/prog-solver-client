@@ -146,8 +146,7 @@ export async function getStaticPaths() {
 
   return {
     paths,
-    fallback: false,
-    revalidate: 10,
+    fallback: false
   };
 }
 
@@ -155,5 +154,10 @@ export async function getStaticProps({ params }) {
   const { taskSlug } = params
   const taskData = await getTaskData(taskSlug)
 
-  return { props: taskData };
+  return { 
+    props: {
+      taskData,
+      revalidate: 10,
+    }
+  }
 }
