@@ -54,17 +54,7 @@ const Adds = styled.div`
 `
 
 const Task = ({ taskData }) => {
-
-  console.log('====================================');
-  console.log('taskData >>', taskData);
-  console.log('====================================');
-
   const [solutionsList, setSolutionsList] = useState([])
-  // const router = useRouter()
-  // const taskSlug = router?.asPath.substring(1)
-  // const { data } = useQuery(GET_TASK, {
-  //   variables: { taskSlug }
-  // })
 
   useEffect(() => {
     hljs.highlightAll()
