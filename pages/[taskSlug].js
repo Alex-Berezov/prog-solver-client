@@ -146,7 +146,7 @@ export async function getStaticPaths() {
 
   return {
     paths: allSlugs?.map(taskSlug => `/${taskSlug}`) || [],
-    fallback: false
+    fallback: true
   };
 }
 
