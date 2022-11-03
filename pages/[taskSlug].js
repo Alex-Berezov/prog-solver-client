@@ -54,17 +54,7 @@ const Adds = styled.div`
 `
 
 const Task = ({ taskData }) => {
-
-  console.log('====================================');
-  console.log('taskData >>', taskData);
-  console.log('====================================');
-
   const [solutionsList, setSolutionsList] = useState([])
-  // const router = useRouter()
-  // const taskSlug = router?.asPath.substring(1)
-  // const { data } = useQuery(GET_TASK, {
-  //   variables: { taskSlug }
-  // })
 
   useEffect(() => {
     hljs.highlightAll()
@@ -146,7 +136,7 @@ export async function getStaticPaths() {
 
   return {
     paths,
-    fallback: false
+    fallback: 'blocking'
   };
 }
 
@@ -157,7 +147,6 @@ export async function getStaticProps({ params }) {
   return { 
     props: {
       taskData
-    },
-    revalidate: 10,
+    }
   }
 }
