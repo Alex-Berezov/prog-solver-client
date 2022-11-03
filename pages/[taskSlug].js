@@ -13,6 +13,7 @@ import hljs from 'highlight.js'
 import Tabs from '../components/Tabs/Tabs'
 import { scRespondTo } from '../utils/index'
 import { client } from './_app.js'
+import { getAllTaskSlugs } from '../lib/tasks';
 
 const ImageWrapper = styled.div`
   display: flex;
@@ -136,17 +137,11 @@ const Task = () => {
 export default Task
 
 export async function getStaticPaths() {
-  const first = 20000
-  const delay = true
-  const { data } = await client.query({query: GET_TASKS, variables: { first, delay }})
-
-  const allSlugs = data?.getAllTasks?.edges?.map(task => {
-    return task.node.taskSlug
-  })
+  const paths = await getAllTaskSlugs()
 
   return {
-    paths: allSlugs?.map(taskSlug => `/${taskSlug}`) || [],
-    fallback: true
+    paths,
+    fallback: false
   };
 }
 
