@@ -13,7 +13,7 @@ import hljs from 'highlight.js'
 import Tabs from '../components/Tabs/Tabs'
 import { scRespondTo } from '../utils/index'
 import { client } from './_app.js'
-import { getAllTaskSlugs } from '../lib/tasks';
+import { getAllTaskSlugs, getTaskData } from '../lib/tasks';
 
 const ImageWrapper = styled.div`
   display: flex;
@@ -53,20 +53,25 @@ const Adds = styled.div`
   }
 `
 
-const Task = () => {
+const Task = (taskData) => {
+
+  // console.log('====================================');
+  // console.log('taskData >>', taskData);
+  // console.log('====================================');
+
   const [solutionsList, setSolutionsList] = useState([])
-  const router = useRouter()
-  const taskSlug = router?.asPath.substring(1)
-  const { data } = useQuery(GET_TASK, {
-    variables: { taskSlug }
-  })
+  // const router = useRouter()
+  // const taskSlug = router?.asPath.substring(1)
+  // const { data } = useQuery(GET_TASK, {
+  //   variables: { taskSlug }
+  // })
 
   useEffect(() => {
     hljs.highlightAll()
   }, [])
 
   useEffect(() => {
-    const newSolutionsList = data && JSON.parse(JSON.stringify(data?.getTask?.solutionsList || []))
+    const newSolutionsList = taskData && JSON.parse(JSON.stringify(taskData?.data?.getTask?.solutionsList || []))
     newSolutionsList?.forEach(item => {
       delete item.__typename
       item.solutions.forEach(el => {
@@ -74,10 +79,10 @@ const Task = () => {
       })
     })
     setSolutionsList(newSolutionsList)
-  }, [data])
+  }, [taskData])
 
-  const title = data?.getTask?.title
-  const description = data?.getTask?.text?.substring(0, 150).trim().replace(/\r?\n/g, ' ')
+  const title = taskData?.data?.getTask?.title
+  const description = taskData?.data?.getTask?.text?.substring(0, 150).trim().replace(/\r?\n/g, ' ')
 
   const langList = solutionsList?.map((item, i) => {
     if (item.solutions[0].solution !== '') {
@@ -101,7 +106,7 @@ const Task = () => {
 
         <ImageWrapper>
           <Image
-            src={`/static/images/${data?.getTask?.imgUrl}`}
+            src={`/static/images/${taskData?.data?.getTask?.imgUrl}`}
             alt={title}
             width={640}
             height={360}
@@ -110,15 +115,15 @@ const Task = () => {
           <ImageText>
             Photo from
             {' '}
-            <a href={`${data?.getTask?.imgAuthor}`}>Unsplash</a>
+            <a href={`${taskData?.data?.getTask?.imgAuthor}`}>Unsplash</a>
           </ImageText>
         </ImageWrapper>
 
-        <TaskTitle>{data?.getTask?.title}</TaskTitle>
+        <TaskTitle>{taskData?.data?.getTask?.title}</TaskTitle>
 
         <pre>
           <code class="language-plaintext">
-            {data?.getTask?.text}
+            {taskData?.data?.getTask?.text}
           </code>
         </pre>
 
@@ -146,8 +151,8 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  const { slug: taskSlug } = params
-  const task = await client.query({query: GET_TASK, variables: { taskSlug }})
+  const { taskSlug } = params
+  const taskData = await getTaskData(taskSlug)
 
-  return { props: task };
+  return { props: taskData };
 }
