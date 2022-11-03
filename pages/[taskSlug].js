@@ -154,6 +154,12 @@ export async function getStaticProps({ params }) {
   const { taskSlug } = params
   const taskData = await getTaskData(taskSlug)
 
+   if (!taskData) {
+    return {
+      notFound: true,
+    }
+  }
+
   return { 
     props: {
       taskData
