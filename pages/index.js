@@ -11,7 +11,7 @@ import SearchTask from '../components/SearchTask/SearchTask'
 import { H1, H3, Text } from '../styles/Theme/commonStyles.js'
 import { scRespondTo } from '../utils/index'
 import Image from 'next/image'
-
+import SkeletonHomePage from '../components/Skeletons/SkeletonHomePage'
 import defaultImg from '../public/static/images/abdelrahman-sobhy-8LBLGdiKcu0-unsplash.jpg'
 
 const MainTitle = styled(H1)`
@@ -226,7 +226,7 @@ const Home = () => {
                   </Task>
                 </Link>
               })
-              : <p>No results</p>
+              : <SkeletonHomePage />
           }
         </TasksList>
         {
