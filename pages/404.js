@@ -31,7 +31,7 @@ export default function FourOhFour() {
     <ContentWrapper>
       <ErrorTitle>404 - Page Not Found</ErrorTitle>
       <Link href="/">
-        <LinkText>
+        <LinkText href="/">
           Go back Home page
         </LinkText>
       </Link>
