@@ -4,16 +4,13 @@ import styled from 'styled-components'
 import * as Styled from '../styles/Theme/commonStyles.js'
 import Header from '../components/Header/Header'
 import PageContainer from '../components/PageContainer/PageContainer'
-import { useRouter } from 'next/router.js'
-import { useQuery } from '@apollo/client'
-import { GET_TASK, GET_TASKS } from '../graphql/query/tasks.js'
 import Image from 'next/image'
 import { H1, H2 } from '../styles/Theme/commonStyles.js'
 import hljs from 'highlight.js'
 import Tabs from '../components/Tabs/Tabs'
 import { scRespondTo } from '../utils/index'
-import { client } from './_app.js'
 import { getAllTaskSlugs, getTaskData } from '../lib/tasks';
+import defaultImg from '../public/static/images/abdelrahman-sobhy-8LBLGdiKcu0-unsplash.jpg'
 
 const ImageWrapper = styled.div`
   display: flex;
@@ -87,6 +84,10 @@ const Task = ({ taskData }) => {
         <meta name="description" content={description} />
         <meta property="og:title" content={title} key="title" />
         <meta property="og:description" content={description} key="description" />
+        <meta property="og:image" content={defaultImg} />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={description} />
+        <meta name="twitter:image" content={defaultImg} />
       </Head>
 
       <Header />

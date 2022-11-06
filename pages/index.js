@@ -175,8 +175,13 @@ const Home = () => {
       <Head>
         <title>{title}</title>
         <meta name="description" content={description} />
+        <meta property="og:site_name" content={`ProgSolver`} />
         <meta property="og:title" content={title} key="title" />
         <meta property="og:description" content={description} key="description" />
+        <meta property="og:image" content={defaultImg} />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={description} />
+        <meta name="twitter:image" content={defaultImg} />
         <meta name="google-site-verification" content="lhi7QMw2TjULX_yhm8j_N86X0MiL7chbOD4HvTciM_U" />
       </Head>
 
