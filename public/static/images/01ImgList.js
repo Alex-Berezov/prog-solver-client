@@ -356,7 +356,7 @@ export const imgList = [
   },
   {
     id: 71,
-    imgUrl: 'andrew-neel-jtsW--Z6bFw-unsplash.jpg',
+    imgUrl: 'andrew-neel-jtsW-Z6bFw-unsplash.jpg',
     imgAuthor: 'https://unsplash.com/photos/jtsW--Z6bFw'
   },
   {
